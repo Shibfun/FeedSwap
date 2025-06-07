@@ -22,13 +22,13 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background: #121212;
+            background: #333;
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 16px;
+            padding: 20px;
         }
         .header {
             text-align: center;
@@ -36,23 +36,23 @@
         }
         .header h1 {
             font-size: clamp(2rem, 5vw, 2.5rem);
-            font-weight: 700;
-            color: var(--primary-color);
+            font-weight: bold;
+            color: #fff;
             letter-spacing: 1px;
         }
         .connect-section {
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
         .connect-section button {
             padding: 10px 24px;
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: #FFF;
             border: none;
-            border-radius: 24px;
-            font-weight: 600;
+            border-radius: 20px;
+            font-weight: bold;
             cursor: pointer;
             font-size: 1rem;
-            transition: transform 0.2s, background 0.3s;
+            transition: transform 0.2s, background 0.2s;
         }
         .connect-section button:hover {
             transform: scale(1.05);
@@ -66,12 +66,12 @@
             gap: 24px;
             justify-content: center;
         }
-        .token-card {
+        .card {
             background: var(--card-bg);
             border: 1px solid #333;
             border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             width: 100%;
             max-width: 500px;
             display: flex;
@@ -86,7 +86,7 @@
         }
         .token-header h3 {
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: bold;
             flex-grow: 1;
         }
         .token-header .copy-button {
@@ -130,13 +130,13 @@
         }
         .token-content h4 {
             font-size: 1.4rem;
-            font-weight: 600;
+            font-weight: bold;
             margin-bottom: 12px;
-            color: var(--primary-color);
+            color: #fff;
         }
         .token-content p.description {
             font-size: 0.9rem;
-            color: #B0B0B0;
+            color: #fff;
             margin-bottom: 16px;
             line-height: 1.5;
         }
@@ -153,7 +153,7 @@
             filter: invert(1);
         }
         .token-content .info a {
-            color: var(--primary-color);
+            color: #fff;
             text-decoration: none;
         }
         .token-content .info a:hover {
@@ -178,7 +178,7 @@
             border: none;
             background: #333;
             color: var(--text-color);
-            font-weight: 600;
+            font-weight: bold;
             font-size: 0.9rem;
             cursor: pointer;
             transition: background 0.2s, color 0.2s;
@@ -198,14 +198,14 @@
             justify-content: space-between;
             font-size: 0.85rem;
             margin-bottom: 8px;
-            color: var(--primary-color);
+            color: #fff;
         }
         .token-info {
             display: flex;
             align-items: center;
             padding: 8px;
             background: var(--card-bg);
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 8px;
         }
         .token-info img {
@@ -220,9 +220,9 @@
             width: 100%;
             padding: 10px;
             background: var(--card-bg);
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: var(--text-color);
+            border: 2px solid #333;
+            border-radius: 4px;
+            color: #fff;
             font-size: 0.9rem;
             text-align: right;
             outline: none;
@@ -235,12 +235,12 @@
         }
         .percentage-buttons button {
             background: #333;
-            border: 1px solid #444;
-            border-radius: 8px;
+            border: 2px solid #fff;
+            border-radius: 5px;
             cursor: pointer;
-            color: var(--text-color);
+            color: #fff;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: bold;
             height: 36px;
             display: flex;
             align-items: center;
@@ -250,25 +250,25 @@
         .percentage-buttons button:hover {
             background: var(--primary-color);
             color: #FFF;
-            transform: scale(1.05);
+            border: none;
         }
         .percentage-buttons button.active {
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: #FFF;
-            border-color: var(--primary-color);
+            border: none;
         }
         .swap-box .trade-button {
             padding: 10px;
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: #FFF;
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: normal;
             width: 100%;
-            font-size: 0.9rem;
+            font-size: 20px;
             position: relative;
-            transition: background 0.3s;
+            transition: background 0.2s;
         }
         .swap-box .trade-button:disabled {
             background: #555;
@@ -295,7 +295,7 @@
         }
         .swap-info {
             font-size: 0.85rem;
-            color: var(--primary-color);
+            color: #ddd;
             margin-top: 8px;
         }
         #dexscreener-embed {
@@ -323,7 +323,7 @@
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
-            margin: 24px auto;
+            margin: 20px auto;
             display: none;
         }
         @keyframes spin {
@@ -331,24 +331,24 @@
             100% { transform: rotate(360deg); }
         }
         .status {
-            font-size: 0.9rem;
-            color: var(--primary-color);
+            font-size: 1em;
+            color: #fff;
             text-align: center;
             margin: 12px 0;
         }
         .footer {
-            font-size: 0.8rem;
-            color: #B0B0B0;
+            font-size: 0.9em;
+            color: #fff;
             text-align: center;
-            margin-top: auto;
-            padding: 16px;
+            margin-top: 20px auto;
+            padding-bottom: 20px;
         }
         .footer a {
-            color: var(--primary-color);
+            color: #fff;
             text-decoration: none;
         }
         .footer a:hover {
-            color: var(--secondary-color);
+            color: var(--primary-color);
         }
         @media (max-width: 768px) {
             body {
@@ -357,7 +357,7 @@
             .header h1 {
                 font-size: 1.8rem;
             }
-            .token-card {
+            .card {
                 max-width: 100%;
             }
             .token-header h3 {
@@ -377,7 +377,7 @@
                 padding: 8px 20px;
             }
             .swap-box input, .trade-button {
-                font-size: 0.85rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -387,12 +387,12 @@
         <h1>FEED Swap</h1>
     </div>
     <div class="connect-section">
-        <button id="connectWalletButton">Connect Wallet</button>
+        <button id="connectWalletButton">Connect wallet</button>
     </div>
     <div id="status" class="status"></div>
     <div class="global-spinner" id="globalSpinner"></div>
     <div class="token-container">
-        <div class="token-card" id="tokenCard"></div>
+        <div class="card" id="tokenCard"></div>
         <div id="dexscreener-embed">
             <iframe src="https://dexscreener.com/shibarium/0xD4301bA08076C14Dfc93fd0a94151E338874D7FE?embed=1&loadChartSettings=0&tabs=0&info=0&chartLeftToolbar=0&chartDefaultOnMobile=1&chartTheme=dark&theme=dark&chartStyle=1&chartType=price&interval=1D" loading="lazy"></iframe>
         </div>
@@ -469,13 +469,13 @@
             const spinner = document.getElementById("globalSpinner");
             const connectButton = document.getElementById("connectWalletButton");
             try {
-                if (!window.ethereum) throw new Error("Please install MetaMask.");
+                if (!window.ethereum) throw new Error("Please install MetaMask");
                 connectButton.disabled = true;
                 status.innerText = "Connecting...";
                 spinner.style.display = "block";
                 web3 = new Web3(window.ethereum);
                 const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-                if (!accounts.length) throw new Error("Please unlock wallet.");
+                if (!accounts.length) throw new Error("Please unlock wallet");
                 account = accounts[0];
                 const chainId = await web3.eth.getChainId();
                 if (Number(chainId) !== 109) {
@@ -506,7 +506,7 @@
         }
 
         function resetUI() {
-            document.getElementById("connectWalletButton").innerText = "Connect Wallet";
+            document.getElementById("connectWalletButton").innerText = "Connect wallet";
             document.getElementById("status").innerText = "";
             const tradeButton = document.querySelector(".trade-button");
             if (tradeButton) tradeButton.disabled = true;
@@ -527,7 +527,10 @@
         }
 
         async function calculateOutput(card, amountIn) {
-            if (!web3 || !account || !amountIn || amountIn <= 0) return;
+            if (!web3 || !account || !amountIn || amountIn <= 0) {
+                card.querySelector(".swap-info").innerText = "Enter a valid amount";
+                return;
+            }
             const isBuy = card.querySelector(".swap-toggle .buy.active");
             const swapInfo = card.querySelector(".swap-info");
             let amountInWei;
@@ -597,11 +600,7 @@
                 card.dataset.tokenBalance = tokenBalance;
                 card.innerHTML = `
                     <div class="token-header">
-                        <h3>Created by: shibariumfun.shib</h3>
-                        <button class="copy-button" data-address="0xED0470C1175DF472eB379265A8536344Ca0784D7">
-                            <img src="https://img.icons8.com/ios-filled/16/000000/copy.png" alt="Copy">
-                            <span class="tooltip">Copied!</span>
-                        </button>
+                        <h3>Created by: FEED</h3>
                         <button class="copy-button" data-address="${tokenAddress}">
                             <img src="https://img.icons8.com/ios-filled/16/000000/contract.png" alt="Copy Contract">
                             <span class="tooltip">Copied Contract!</span>
@@ -612,16 +611,16 @@
                         <h4>FEED</h4>
                         <p class="description">FEED enhances Shibarium’s ecosystem by incentivizing participation and supporting SHIB’s deflationary mechanics through its unique burning process.</p>
                         <div class="info">
-                            <img src="https://img.icons8.com/ios-filled/16/000000/link.png" alt="Website">
-                            <a href="https://feed.shibarium.fun/" target="_blank">shib.club</a>
+                            <img src="https://img.icons8.com/ios-filled/16/1.png" alt="Website">
+                            <a href="https://feed.shib.io/" target="_blank">shib.club</a>
                         </div>
                         <div class="info">
-                            <img src="https://img.icons8.com/ios-filled/16/000000/twitter.png" alt="Twitter">
-                            <a href="https://x.com/feedcto" target="_blank">@woofswap</a>
+                            <img src="https://img.icons8.com/ios-filled/16/x.png" alt="Twitter">
+                            <a href="https://x.com/woofswap" target="_blank">@woofswap</a>
                         </div>
                         <div class="info">
-                            <img src="https://img.icons8.com/ios-filled/16/000000/telegram-app.png" alt="Telegram">
-                            <a href="https://t.me/feedcto" target="_blank">ShibariumSRC20</a>
+                            <img src="https://img.icons8.com/ios-filled/16/telegram-app.png" alt="Telegram">
+                            <a href="https://t.me/ShibariumSRC20" target="_blank">@ShibariumSRC20</a>
                         </div>
                     </div>
                     <div class="trade-section">
@@ -645,7 +644,7 @@
                                 <button data-percentage="75">75%</button>
                                 <button data-percentage="100">MAX</button>
                             </div>
-                            <div class="swap-info">Enter amount to see estimated output</div>
+                            <div class="swap-info">Enter a valid amount</div>
                             <button class="trade-button" data-address="${tokenAddress}" disabled>
                                 Buy
                                 <span class="spinner"></span>
@@ -697,7 +696,7 @@
                         percentageButtons.forEach(btn => btn.onclick = () => setAmount(card, btn.dataset.percentage, "sell"));
                     }
                     input.value = "";
-                    card.querySelector(".swap-info").innerText = "Enter amount to see estimated output";
+                    card.querySelector(".swap-info").innerText = "Enter a valid amount";
                     updateTradeButtonState(card);
                 });
             });
@@ -812,7 +811,7 @@
                 showStatus("Buy successful!");
                 await updateBalances();
                 card.querySelector(".amount-input").value = "";
-                card.querySelector(".swap-info").innerText = "Enter amount to see estimated output";
+                card.querySelector(".swap-info").innerText = "Enter a valid amount";
                 updateTradeButtonState(card);
             } catch (error) {
                 let errorMessage = error.message || "Transaction failed";
@@ -854,7 +853,7 @@
                 button.classList.add("loading");
                 button.disabled = true;
                 showStatus("Checking trading pair...");
-                let bestOutput = web3.utils.toBN("0");
+                let bestOutput = web3.utils.toBN(0);
                 let routes;
                 for (const stable of [true, false]) {
                     const pairAddress = await factory.methods.getPair(tokenAddress, wboneAddress, stable).call();
@@ -904,7 +903,7 @@
                 showStatus("Sell successful!");
                 await updateBalances();
                 card.querySelector(".amount-input").value = "";
-                card.querySelector(".swap-info").innerText = "Enter amount to see estimated output";
+                card.querySelector(".swap-info").innerText = "Enter a valid amount";
                 updateTradeButtonState(card);
             } catch (error) {
                 let errorMessage = error.message || "Transaction failed";
@@ -924,6 +923,7 @@
                 showStatus('Please run via server (e.g., "npx serve")');
                 return;
             }
+            resetUI();
             if (await tryInitializeWeb3()) loadToken();
             else showStatus("Failed to connect to Shibarium");
         });
