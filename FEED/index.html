@@ -339,20 +339,6 @@
             left: 0;
             border: 0;
         }
-        .global-spinner {
-            border: 4px solid var(--primary-color);
-            border-top: 4px solid transparent;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 24px auto;
-            display: none;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
         .footer {
             font-size: 0.8rem;
             color: #B0B0B0;
@@ -397,6 +383,10 @@
                 font-size: 0.85rem;
             }
         }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -407,7 +397,6 @@
         <button id="connectWalletButton">Connect wallet</button>
         <div id="networkStatus" class="status">Click to connect...</div>
     </div>
-    <div class="global-spinner" id="globalSpinner"></div>
     <div class="dog-message" id="dogMessage">Woof! Connect your wallet to start swapping, pup!</div>
     <div class="token-container">
         <div class="token-card" id="tokenCard"></div>
@@ -435,18 +424,6 @@
         const routerAddress = "0x96b16aBD53Bfd765F4CD118590C1d0be8B57DE24";
         const factoryAddress = "0xB9fbdFA27B7ba8BB2d4bB4aB399e4c55F0F7F83a";
         const wboneAddress = "0x839FdB6cc98342B428E074C1573ADF6D48CA3bFd";
-        const shibarium = {
-            chainId: "0x6d",
-            chainName: "Shibarium",
-            nativeCurrency: { name: "BONE", symbol: "BONE", decimals: 18 },
-            rpcUrls: ["https://rpc.shibrpc.com", "https://www.shibrpc.com", "https://shibarium-rpc.com"],
-            blockExplorerUrls: ["https://shibariumscan.io"]
-        };
-        const erc20Abi = [
-            {"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"},
-            {"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"type":"function"},
-            {"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"type":"function"}
-        ];
         const routerAbi = [
             {"inputs":[{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct Router.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactETHForTokensSupportingFeeOnTransferTokens","outputs":[],"stateMutability":"payable","type":"function"},
             {"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct Router.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactTokensForETHSupportingFeeOnTransferTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},
@@ -457,34 +434,47 @@
         ];
         const pairAbi = [
             {"inputs":[],"name":"getReserves","outputs":[{"internalType":"uint256","name":"reserve0","type":"uint256"},{"internalType":"uint256","name":"reserve1","type":"uint256"},{"internalType":"uint32","name":"blockTimestampLast","type":"uint32"}],"stateMutability":"view","type":"function"},
-            {"inputs":[],"name":"token0","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
+            {"inputs":[],"name":"token0","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"token1","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
         ];
+        const erc20Abi = [
+            {"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"uint256"}],"type":"function"},
+            {"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"type":"function"},
+            {"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"type":"function"}
+        ];
+        const shibarium = {
+            chainId": 109,
+            chainName: "Shibarium",
+            nativeCurrency: { name: "BONE", symbol: "BONE", decimals: 18 },
+            rpcUrls: ["https://rpc.shibrpc.com"],
+            blockExplorerUrls: ["https://shibariumscan.io"]
+        };
         let web3, account, router, factory;
         let fromToken = boneToken;
         let toToken = feedToken;
-        let fromBalance = '0';
+        let fromBalance = "0";
         let isFromBone = true;
         let isApproving = false;
         const defaultSlippage = 0.005;
         const maxPriceImpact = 50;
-        const maxAllowance = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
 
         const dogMessages = {
-            connectStart: ["Woof woof! Sniffing out your wallet, hold tight, human!","Arf! Digging into Shibarium, let’s fetch that wallet!","Bow wow! Connecting to your stash, stay pawsitive!","Woof! I smell a wallet, let’s link it up quick!"],
-            connectSuccess: ["Arf arf! You’re in, pup! Time to chase some BONEs!","Woof! Wallet’s hooked, ready to roll in Shibarium!","Yip yip! Connected, hooman! Let’s swap some treats!","Bow wow! Welcome aboard, let’s sniff out some swaps!"],
-            connectFail: ["Grrr... Wallet slipped away, try again, hooman!","Woof? No wallet scent detected, give it another go!","Arf arf! Something barked up, retry connecting, pup!","Ruff! Wallet’s hiding, let’s dig it out again!"],
-            setPercentage: (percent) => [`Woof! ${percent}% in? You’re a bold Shib, hooman!`,`Arf arf! Going ${percent}%? Let’s dig into that swap!`,`Bow wow! ${percent}% of the stash? Pawsitively daring!`,`Yip! ${percent}%? You’re chasing big bones today!`],
-            calcStart: ["Woof! Sniffing out the best price, hang tight!","Arf! Digging up some swap numbers, stay put, pup!","Bow wow! Crunching bones, I’ll fetch the output soon!","Ruff! Calculating your treat, give me a sec, hooman!"],
-            calcSuccess: (amount, symbol) => [`Arf! Found ya ${amount} ${symbol}! Ready to swap, pup?`,`Woof woof! Snagged ${amount} ${symbol}, let’s roll!`,`Yip yip! Dug up ${amount} ${symbol}, happy tail wags!`,`Bow wow! ${amount} ${symbol} sniffed out, swap time!`],
-            calcFail: ["Grrr... No path for these bones, try a new pair, pup!","Woof? Swap trail’s cold, pick another token, hooman!","Arf arf! Couldn’t fetch the output, let’s retry!","Ruff! Swap math barked up, give it another go!"],
-            swapStart: ["Woof woof! Swapping time, let’s fetch those tokens!","Arf! Launching the swap, hold onto your leash, pup!","Bow wow! Trading bones, here we go, Shib style!","Yip! Swapping in Shibarium, let’s make it pawsome!"],
-            swapSuccess: ["Arf arf! Swap done, you’re a Woofswap champ, hooman!","Woof! Tokens fetched, tail-wagging success, pup!","Bow wow! Swapped like a pro, time to celebrate!","Yip yip! Swap complete, you’re the top dog now!"],
-            swapFail: ["Grrr... Swap didn’t work, let’s try again, pup!","Woof? Swap got lost, retry it, clever hooman!","Arf! Token chase failed, another go, Shib friend?","Ruff ruff! Swap slipped, let’s dig it up again!"],
-            swapNoAmount: ["Arf! No amount? How am I supposed to swap air?!","Woof woof! Gimme a number, pup, or we’re stuck!","Bow wow! Empty swap? Fill it up, hooman!","Ruff! Amount’s missing, let’s fetch some digits!"],
-            highPriceImpact: ["Woof woof! That swap has a huge price impact, pup! Try a smaller amount!","Arf! Too many bones at once—price impact’s too high, hooman!","Bow wow! Swap’s too big for the pool, let’s scale it down!","Ruff! Price impact’s barking mad—reduce the amount, Shib friend!"],
-            insufficientLiquidity: ["Grrr... Not enough bones in the pool for this swap, pup!","Woof? Pool’s too shallow—try a smaller swap, hooman!","Arf arf! Liquidity’s low, can’t fetch that many bones!","Ruff! Pool’s running dry—let’s try a smaller trade!"],
-            approving: ["Woof! Approving your tokens, hold on, pup!","Arf! Sniffing out approval, almost there, hooman!","Bow wow! Authorizing the swap, stay pawsitive!","Ruff! Getting ready to trade, approving now!"],
-            userDenied: ["Woof woof! You scared me off, hooman! Approve next time, pup!","Arf! No swap today? You’re a tricky one, let’s try again!","Bow wow! Rejected my trade? Give me a bone next time!","Ruff ruff! You denied me, hooman! Let’s wag back later!"]
+                        connectStart: ["Woof woof! Sniffing out your wallet, hold tight, human!", "Arf! Digging into Shibarium, let’s fetch that wallet!", "Bow wow! Connecting to your stash, stay pawsitive!", "Woof! I smell a wallet, let’s link it up quick!"],
+            connectSuccess: ["Arf arf! You’re in, pup! Time to chase some BONEs!", "Woof! Wallet’s hooked, ready to roll in Shibarium!", "Yip yip! Connected, hooman! Let’s swap some treats!", "Bow wow! Welcome aboard, let’s sniff out some swaps!"],
+            connectFail: ["Grrr... Wallet slipped away, try again, hooman!", "Woof? No wallet scent detected, give it another go!", "Arf! Something barked up, retry connecting, pup!", "Ruff! Wallet’s hiding, let’s dig it out again!"],
+            switchTokens: ["Woof woof! Flipping tokens like a Shib pro, huh?", "Arf! Swapping sides, let’s keep the tail wagging!", "Bow wow! Token switcheroo, you’re a clever pup!", "Ruff ruff! Mixing it up, let’s see what we fetch!"],
+            setPercentage: (percent) => [`Woof! ${percent}% in? You’re a bold Shib, hooman!`, `Arf arf! Going ${percent}%? Let’s dig into that swap!`, `Bow wow! ${percent}% of the stash? Pawsitively daring!`, `Yip! ${percent}%? You’re chasing big bones today!`],
+            calcStart: ["Woof! Sniffing out the best price, hang tight!", "Arf! Digging up some swap numbers, stay put, pup!", "Bow wow! Crunching bones, I’ll fetch the output soon!", "Ruff! Calculating your treat, give me a sec, hooman!"],
+            calcSuccess: (amount, symbol) => [`Arf! Found ya ${amount} ${symbol}! Ready to swap, pup?`, `Woof woof! Snagged ${amount} ${symbol}, let’s roll!`, `Yip yip! Dug up ${amount} ${symbol}, happy tail wags!`, `Bow wow! ${amount} ${symbol} sniffed out, swap time!`],
+            calcFail: ["Grrr... No path for these bones, try a new pair, pup!", "Woof? Swap trail’s cold, pick another token, hooman!", "Arf arf! Couldn’t fetch the output, let’s retry!", "Ruff! Swap math barked up, give it another go!"],
+            swapStart: ["Woof woof! Swapping time, let’s fetch those tokens!", "Arf! Launching the swap, hold onto your leash, pup!", "Bow wow! Trading bones, here we go, Shib style!", "Yip! Swapping in Shibarium, let’s make it pawsome!"],
+            swapSuccess: ["Arf arf! Swap done, you’re a Woofswap champ, hooman!", "Woof! Tokens fetched, tail-wagging success, pup!", "Bow wow! Swapped like a pro, time to celebrate!", "Yip yip! Swap complete, you’re the top dog now!"],
+            swapFail: ["Grrr... Swap didn’t work, let’s try again, pup!", "Woof? Swap got lost, retry it, clever hooman!", "Arf! Token chase failed, another go, Shib friend?", "Ruff ruff! Swap slipped, let’s dig it up again!"],
+            swapNoAmount: ["Arf! No amount? How am I supposed to swap air?!", "Woof woof! Gimme a number, pup, or we’re stuck!", "Bow wow! Empty swap? Fill it up, hooman!", "Ruff! Amount’s missing, let’s fetch some digits!"],
+            highPriceImpact: ["Woof woof! That swap has a huge price impact, pup! Try a smaller amount!", "Arf! Too many bones at once—price impact’s too high, hooman!", "Bow wow! Swap’s too big for the pool, let’s scale it down!", "Ruff! Price impact’s barking mad—reduce the amount, Shib friend!"],
+            insufficientLiquidity: ["Grrr... Not enough bones in the pool for this swap, pup!", "Woof? Pool’s too shallow—try a smaller swap, hooman!", "Arf arf! Liquidity’s low, can’t fetch that many bones!", "Ruff! Pool’s running dry—let’s try a smaller trade!"],
+            approving: ["Woof! Approving your tokens, hold on, pup!", "Arf! Sniffing out approval, almost there, hooman!", "Bow wow! Authorizing the swap, stay pawsitive!", "Ruff! Getting ready to trade, approving now!"],
+            userDenied: ["Woof woof! You scared me off, hooman! Approve next time, pup!", "Arf! No swap today? You’re a tricky one, let’s try again!", "Bow wow! Rejected my trade? Give me a bone next time!", "Ruff ruff! You denied me, hooman! Let’s wag back later!"]
         };
 
         function getRandomMessage(type, param1, param2) {
@@ -500,32 +490,15 @@
             return address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "0x...";
         }
 
-        async function tryInitializeWeb3() {
-            for (const rpc of shibarium.rpcUrls) {
-                try {
-                    web3 = new Web3(rpc);
-                    await web3.eth.getBlockNumber();
-                    router = new web3.eth.Contract(routerAbi, routerAddress);
-                    factory = new web3.eth.Contract(factoryAbi, factoryAddress);
-                    return true;
-                } catch (e) {
-                    console.warn(`RPC ${rpc} failed: ${e.message}`);
-                }
-            }
-            return false;
-        }
-
         async function connectWallet() {
             const status = document.getElementById("networkStatus");
             const connectButton = document.getElementById("connectWalletButton");
             const dogMessage = document.getElementById("dogMessage");
-            const spinner = document.getElementById("globalSpinner");
             try {
                 if (!window.ethereum) throw new Error("No wallet detected. Please install MetaMask.");
                 connectButton.disabled = true;
                 status.innerText = "Connecting...";
                 dogMessage.innerText = getRandomMessage("connectStart");
-                spinner.style.display = "block";
                 web3 = new Web3(window.ethereum);
                 const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
                 if (!accounts.length) throw new Error("No accounts found. Please unlock your wallet.");
@@ -533,7 +506,7 @@
                 const chainId = await web3.eth.getChainId();
                 if (Number(chainId) !== 109) {
                     try {
-                        await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: shibarium.chainId }] });
+                        await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x6d" }] });
                     } catch (switchError) {
                         if (switchError.code === 4902) {
                             await window.ethereum.request({ method: "wallet_addEthereumChain", params: [shibarium] });
@@ -555,7 +528,6 @@
                 dogMessage.innerText = getRandomMessage("connectFail");
                 resetUI();
             } finally {
-                spinner.style.display = "none";
                 connectButton.disabled = false;
             }
         }
@@ -576,7 +548,7 @@
                     if (web3) {
                         const chainId = await web3.eth.getChainId();
                         if (Number(chainId) !== 109) {
-                            await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: shibarium.chainId }] });
+                            await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x6d" }] });
                         }
                         router = new web3.eth.Contract(routerAbi, routerAddress);
                         factory = new web3.eth.Contract(factoryAbi, factoryAddress);
@@ -646,17 +618,15 @@
                 dogMessage.innerText = getRandomMessage("swapNoAmount");
                 return;
             }
-            swapInfo.innerText = "Calculating...";
+            swapInfo.innerHTML = `Calculating... <span class="spinner"></span>`;
             dogMessage.innerText = getRandomMessage("calcStart");
             try {
                 let bestOutput = web3.utils.toBN("0");
                 let routes;
-                const from = isFromBone ? wboneAddress : feedToken.address;
-                const to = isFromBone ? feedToken.address : wboneAddress;
                 for (const stable of [true, false]) {
-                    const pairAddress = await factory.methods.getPair(from, to, stable).call();
+                    const pairAddress = await factory.methods.getPair(fromToken.address, toToken.address, stable).call();
                     if (pairAddress !== "0x0000000000000000000000000000000000000000") {
-                        const tempRoutes = [{ from, to, stable }];
+                        const tempRoutes = [{ from: fromToken.address, to: toToken.address, stable }];
                         const amounts = await router.methods.getAmountsOut(amountInWei, tempRoutes).call();
                         const output = web3.utils.toBN(amounts[amounts.length - 1]);
                         if (output.gt(bestOutput)) {
@@ -691,19 +661,13 @@
 
         async function loadToken() {
             const card = document.getElementById("tokenCard");
-            const spinner = document.getElementById("globalSpinner");
             const dogMessage = document.getElementById("dogMessage");
             try {
-                spinner.style.display = "block";
                 dogMessage.innerText = "Woof! Loading FEED, pup!";
-                if (!web3 && !await tryInitializeWeb3()) {
-                    dogMessage.innerText = "Woof? Failed to connect to Shibarium!";
-                    return;
-                }
-                const tokenContract = new web3.eth.Contract(erc20Abi, feedToken.address);
                 let tokenBalance = "0";
                 let boneBalance = "0";
                 if (account) {
+                    const tokenContract = new web3.eth.Contract(erc20Abi, feedToken.address);
                     tokenBalance = await tokenContract.methods.balanceOf(account).call();
                     boneBalance = await web3.eth.getBalance(account);
                 }
@@ -768,8 +732,6 @@
                 dogMessage.innerText = "Woof! FEED loaded, ready to swap, pup!";
             } catch (error) {
                 dogMessage.innerText = `Woof? Failed to load FEED: ${error.message}`;
-            } finally {
-                spinner.style.display = "none";
             }
         }
 
@@ -795,6 +757,7 @@
                     const tokenInfo = card.querySelector(".token-info");
                     const tradeButton = card.querySelector(".trade-button");
                     const input = card.querySelector(".amount-input");
+                    const dogMessage = document.getElementById("dogMessage");
                     if (isFromBone) {
                         balanceRow.innerHTML = `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(fromBalance, "ether")).toFixed(2)}</span>`;
                         tokenInfo.innerHTML = `<img src="${boneToken.logo}" alt="BONE"><span>BONE</span>`;
@@ -806,6 +769,7 @@
                     }
                     input.value = "";
                     card.querySelector(".swap-info").innerText = "Enter a valid amount";
+                    dogMessage.innerText = getRandomMessage("switchTokens");
                     await updateBalances();
                     updateTradeButtonState();
                 });
@@ -841,7 +805,7 @@
                 amount = percentage === "100" ? Math.max(0, balance - 0.01) : balance * (percentage / 100);
             } else {
                 let balance = parseFloat(web3.utils.fromWei(card.dataset.tokenBalance, "ether"));
-                amount = percentage === "100" ? Math.max(0, balance - 1) : balance * (percentage / 100);
+                amount = percentage === "100" ? balance : balance * (percentage / 100);
             }
             input.value = amount.toFixed(4);
             dogMessage.innerText = getRandomMessage("setPercentage", percentage);
@@ -850,20 +814,21 @@
         }
 
         async function approveToken(tokenAddress, amount) {
-            if (tokenAddress === wboneAddress) return;
-            const tokenAddress = new web3.eth.Contract(erc20, feedToken.address);
+            if (tokenAddress === wboneAddress && fromToken.isNative) return;
+            const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress);
             const allowance = await tokenContract.methods.allowance(account, routerAddress).call();
-            if (web3.utils.toBN(allowance).lt(amount)) {
+            if (web3.utils.toBN(allowance).lt(web3.utils.toBN(amount))) {
                 const card = document.getElementById("tokenCard");
-                const tradeButton = document.querySelector(".trade-button");
+                const tradeButton = card.querySelector(".trade-button");
                 const dogMessage = document.getElementById("dogMessage");
                 isApproving = true;
+                tradeButton.textContent = "Authorizing...";
                 tradeButton.disabled = true;
-                tradeButton.innerText = "Approving...";
                 dogMessage.innerText = getRandomMessage("approving");
-                await tokenContract.methods.approve(routerAddress, maxAllowance).send({ from: account });
+                await tokenContract.methods.approve(routerAddress, amount).send({ from: account });
                 document.getElementById("networkStatus").innerText = "Token approved";
                 isApproving = false;
+                tradeButton.textContent = isFromBone ? "Buy" : "Sell";
                 tradeButton.disabled = false;
                 dogMessage.innerText = "Woof! Tokens approved, ready to swap!";
             }
@@ -897,7 +862,7 @@
             const balanceToCheck = isFromBone ? fromBalance : card.dataset.tokenBalance;
             if (web3.utils.toBN(balanceToCheck).lt(amountInWei)) {
                 status.innerText = `Insufficient ${isFromBone ? "BONE" : "FEED"} balance`;
-                dogMessage.innerText = `Woof! Not enough ${isFromBone ? "BONE" : "FEED"} balance, pup!`;
+                dogMessage.innerText = `Woof! Not enough ${isFromBone ? "BONE" : "FEED"} to swap, pup!`;
                 return;
             }
             const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
@@ -911,7 +876,7 @@
                 for (const stable of [true, false]) {
                     const pairAddress = await factory.methods.getPair(fromToken.address, toToken.address, stable).call();
                     if (pairAddress !== "0x0000000000000000000000000000000000000000") {
-                        const tempRoutes = [{ from: fromToken.address, to: toToken.address, stable } ];
+                        const tempRoutes = [{ from: fromToken.address, to: toToken.address, stable }];
                         const amounts = await router.methods.getAmountsOut(amountInWei, tempRoutes).call();
                         const output = web3.utils.toBN(amounts[amounts.length - 1]);
                         if (output.gt(bestOutput)) {
@@ -923,31 +888,37 @@
                 if (!routes || bestOutput.eq(web3.utils.toBN("0"))) {
                     status.innerText = "No valid trading pair found.";
                     dogMessage.innerText = getRandomMessage("calcFail");
+                    tradeButton.classList.remove("loading");
+                    tradeButton.disabled = false;
                     return;
                 }
                 const pairAddress = await factory.methods.getPair(fromToken.address, toToken.address, routes[0].stable).call();
                 const pairContract = new web3.eth.Contract(pairAbi, pairAddress);
                 const reserves = await pairContract.methods.getReserves().call();
                 const token0 = await pairContract.methods.token0().call();
-                const reserveFrom = token0 === fromToken.address ? reserves.reserve0 : reserves.reserve1 : reserves;
-                const reserveTo = token0 === fromToken ? reserves.reserve1 : reserves.reserve0 : reserves;
+                const reserveFrom = token0 === fromToken.address ? reserves.reserve0 : reserves.reserve1;
+                const reserveTo = token0 === fromToken.address ? reserves.reserve1 : reserves.reserve0;
                 const reserveFromBN = web3.utils.toBN(reserveFrom);
                 const reserveToBN = web3.utils.toBN(reserveTo);
-                const priceImpact = amountInWei.mul(web3.utils.toBN(100)).div(reserveFromBN.add(amountInWei)).div(reserveFromBN);
+                const priceImpact = amountInWei.mul(web3.utils.toBN(100)).div(reserveFromBN.add(amountInWei));
                 if (priceImpact.gt(web3.utils.toBN(maxPriceImpact))) {
                     status.innerText = `Price impact too high (${priceImpact.toString()}%)`;
                     dogMessage.innerText = getRandomMessage("highPriceImpact");
+                    tradeButton.classList.remove("loading");
+                    tradeButton.disabled = false;
                     return;
                 }
                 if (bestOutput.gt(reserveToBN)) {
                     status.innerText = "Insufficient liquidity";
                     dogMessage.innerText = getRandomMessage("insufficientLiquidity");
+                    tradeButton.classList.remove("loading");
+                    tradeButton.disabled = false;
                     return;
                 }
                 const slippageFactor = web3.utils.toBN(1000 - defaultSlippage * 1000);
                 const amountOutMin = bestOutput.mul(slippageFactor).div(web3.utils.toBN(1000));
-                if (!isFromBone) {
-                    await approveToken(feedToken.address, amountInWei);
+                if (!fromToken.isNative) {
+                    await approveToken(fromToken.address, amountInWei);
                 }
                 if (isFromBone) {
                     await router.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(
@@ -1000,13 +971,8 @@
             }
             resetUI();
             setupWalletListeners();
-            if (await tryInitializeWeb3()) {
-                await loadToken();
-            } else {
-                document.getElementById("dogMessage").textContent = "Woof? Failed to connect to Shibarium!";
-            }
+            await loadToken();
         });
-    }
-</script>
+    </script>
 </body>
 </html>
