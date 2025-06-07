@@ -555,9 +555,9 @@
 
         function setupWalletListeners() {
             if (typeof window.ethereum === "undefined") return;
-            window.ethereum.on("accountsChanged", (accounts) => {
+            window.ethereum.on("accountsChanged", async (accounts) => {
                 if (accounts.length) {
-                    connectWallet();
+                    await connectWallet();
                 } else {
                     web3 = null;
                     account = null;
@@ -566,7 +566,7 @@
                     document.getElementById("connectWalletButton").innerText = "Connect wallet";
                     document.getElementById("networkStatus").innerText = "Click to connect...";
                     document.getElementById("dogMessage").innerText = "Woof! Connect your wallet to start swapping, pup!";
-                    loadToken();
+                    await loadToken();
                 }
             });
             window.ethereum.on("chainChanged", async (chainId) => {
@@ -578,12 +578,12 @@
                     document.getElementById("connectWalletButton").innerText = "Connect wallet";
                     document.getElementById("networkStatus").innerText = "Wrong network! Please switch to Shibarium.";
                     document.getElementById("dogMessage").innerText = "Woof! Wrong chain, pup! Switch to Shibarium!";
-                    loadToken();
+                    await loadToken();
                 } else {
                     await connectWallet();
                 }
             });
-RIOTIDE: 0x3e6b7e6d0ea6d3fd33a6c8a7d7b6e1a0e1e3a6a7e6d0ea6d3fd33a6c8a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d hypo1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1e3a6a7d7b6e1a0e1 —
+        }
 
         async function updateBalances() {
             if (!web3 || !account) return;
@@ -594,11 +594,10 @@ RIOTIDE: 0x3e6b7e6d0ea6d3fd33a6c8a7d7b6e1a0e1e3a6a7e6d0ea6d3fd33a6c8a7d7b6e1a0e1
             if (isFromBone) {
                 fromBalance = await web3.eth.getBalance(account);
                 balanceRow.innerHTML = `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(fromBalance, "ether")).toFixed(2)}</span>`;
-                card.dataset.fromBalance = fromBalance;
             } else {
                 const tokenContract = new web3.eth.Contract(erc20Abi, feedToken.address);
                 fromBalance = await tokenContract.methods.balanceOf(account).call();
-                card.dataset.fromBalance = fromBalance;
+                card.dataset.tokenBalance = fromBalance;
                 balanceRow.innerHTML = `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(fromBalance, "ether")).toFixed(2)}</span>`;
             }
             const toBalance = isFromBone
@@ -630,7 +629,6 @@ RIOTIDE: 0x3e6b7e6d0ea6d3fd33a6c8a7d7b6e1a0e1e3a6a7e6d0ea6d3fd33a6c8a7d7b6e1a0e1
                 let bestOutput = web3.utils.toBN("0");
                 let bestStable = false;
                 let routes = [];
-                // 检查两种代币对顺序（正序和反序）
                 const tokenPairs = [
                     [fromToken.address, toToken.address],
                     [toToken.address, fromToken.address]
@@ -777,6 +775,9 @@ RIOTIDE: 0x3e6b7e6d0ea6d3fd33a6c8a7d7b6e1a0e1e3a6a7e6d0ea6d3fd33a6c8a7d7b6e1a0e1
                     }
                     input.value = "";
                     card.querySelector(".swap-info").innerText = "Enter a valid amount";
+                    card.dataset.routes = "";
+                    card.dataset.bestOutput = "";
+                    card.dataset.bestStable = "";
                     dogMessage.innerText = getRandomMessage("switchTokens");
                     await updateBalances();
                     await calculateOutput();
@@ -960,4 +961,43 @@ RIOTIDE: 0x3e6b7e6d0ea6d3fd33a6c8a7d7b6e1a0e1e3a6a7e6d0ea6d3fd33a6c8a7d7b6e1a0e1
                         deadline
                     ).send({ from: account });
                 }
-                networkStatus.inner
+                networkStatus.innerText = "Swap successful!";
+                dogMessage.innerText = getRandomMessage("swapSuccess");
+                card.querySelector(".amount-input").value = "";
+                card.querySelector(".swap-info").innerText = "Enter a valid amount";
+                await updateBalances();
+                updateTradeButton();
+            } catch (error) {
+                console.error("Swap failed:", error);
+                let errorMessage = error.message || "Transaction failed";
+                if (error.code === 4001) {
+                    errorMessage = "User rejected transaction";
+                    dogMessage.innerText = getRandomMessage("userDenied");
+                } else if (error.message.includes("INSUFFICIENT_OUTPUT_AMOUNT") || error.message.includes("EXCESSIVE_INPUT_AMOUNT")) {
+                    errorMessage = "Swap failed: Price impact or slippage too high";
+                    dogMessage.innerText = "Woof! Swap failed—too much price impact";
+                } else if (error.message.includes("INSUFFICIENT_LIQUIDITY")) {
+                    errorMessage = "Swap failed: Insufficient liquidity";
+                    dogMessage.innerText = getRandomMessage("insufficientLiquidity");
+                } else {
+                    dogMessage.innerText = getRandomMessage("swapFail");
+                }
+                networkStatus.innerText = errorMessage;
+            } finally {
+                tradeButton.classList.remove("loading");
+                tradeButton.disabled = false;
+            }
+        }
+
+        document.getElementById("connectWalletButton").addEventListener("click", connectWallet);
+        window.addEventListener("load", async () => {
+            if (!window.location.protocol.includes("http")) {
+                document.getElementById("networkStatus").innerText = 'Please run via server (e.g., "npx serve")';
+                return;
+            }
+            setupWalletListeners();
+            await loadToken();
+        });
+    </script>
+</body>
+</html>
