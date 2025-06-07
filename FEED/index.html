@@ -35,9 +35,10 @@
             margin-bottom: 24px;
         }
         .header h1 {
-            font-size: clamp(2em, 5vw, 2.5em);
+            font-size: clamp(2rem, 5vw, 2.5rem);
             font-weight: 700;
             color: var(--primary-color);
+            letter-spacing: 1px;
         }
         .connect-section {
             margin-bottom: 16px;
@@ -50,7 +51,7 @@
             border-radius: 24px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1rem;
             transition: transform 0.2s, background 0.3s;
         }
         .connect-section button:hover {
@@ -84,7 +85,7 @@
             border-bottom: 1px solid #333;
         }
         .token-header h3 {
-            font-size: 1.1em;
+            font-size: 1.1rem;
             font-weight: 600;
             flex-grow: 1;
         }
@@ -104,7 +105,7 @@
             visibility: hidden;
             background: var(--primary-color);
             color: #FFF;
-            font-size: 0.8em;
+            font-size: 0.8rem;
             padding: 4px 8px;
             border-radius: 4px;
             position: absolute;
@@ -128,19 +129,19 @@
             flex-grow: 1;
         }
         .token-content h4 {
-            font-size: 1.4em;
+            font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 12px;
             color: var(--primary-color);
         }
         .token-content p.description {
-            font-size: 0.9em;
+            font-size: 0.9rem;
             color: #B0B0B0;
             margin-bottom: 16px;
             line-height: 1.5;
         }
         .token-content .info {
-            font-size: 0.85em;
+            font-size: 0.85rem;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -178,7 +179,7 @@
             background: #333;
             color: var(--text-color);
             font-weight: 600;
-            font-size: 0.9em;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: background 0.2s, color 0.2s;
         }
@@ -195,7 +196,7 @@
         .balance-row {
             display: flex;
             justify-content: space-between;
-            font-size: 0.85em;
+            font-size: 0.85rem;
             margin-bottom: 8px;
             color: var(--primary-color);
         }
@@ -213,7 +214,7 @@
             margin-right: 8px;
         }
         .token-info span {
-            font-size: 0.9em;
+            font-size: 0.9rem;
         }
         .swap-box input {
             width: 100%;
@@ -222,7 +223,7 @@
             border: 1px solid #333;
             border-radius: 8px;
             color: var(--text-color);
-            font-size: 0.9em;
+            font-size: 0.9rem;
             text-align: right;
             outline: none;
         }
@@ -233,13 +234,12 @@
             margin: 8px 0;
         }
         .percentage-buttons button {
-            padding: 0;
             background: #333;
             border: 1px solid #444;
             border-radius: 8px;
             cursor: pointer;
             color: var(--text-color);
-            font-size: 0.85em;
+            font-size: 0.85rem;
             font-weight: 600;
             height: 36px;
             display: flex;
@@ -250,6 +250,7 @@
         .percentage-buttons button:hover {
             background: var(--primary-color);
             color: #FFF;
+            transform: scale(1.05);
         }
         .percentage-buttons button.active {
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
@@ -265,7 +266,7 @@
             cursor: pointer;
             font-weight: 600;
             width: 100%;
-            font-size: 0.9em;
+            font-size: 0.9rem;
             position: relative;
             transition: background 0.3s;
         }
@@ -293,7 +294,7 @@
             display: block;
         }
         .swap-info {
-            font-size: 0.85em;
+            font-size: 0.85rem;
             color: var(--primary-color);
             margin-top: 8px;
         }
@@ -330,13 +331,13 @@
             100% { transform: rotate(360deg); }
         }
         .status {
-            font-size: 0.9em;
+            font-size: 0.9rem;
             color: var(--primary-color);
             text-align: center;
             margin: 12px 0;
         }
         .footer {
-            font-size: 0.8em;
+            font-size: 0.8rem;
             color: #B0B0B0;
             text-align: center;
             margin-top: auto;
@@ -354,25 +355,29 @@
                 padding: 12px;
             }
             .header h1 {
-                font-size: 1.8em;
+                font-size: 1.8rem;
             }
             .token-card {
                 max-width: 100%;
             }
             .token-header h3 {
-                font-size: 1em;
+                font-size: 1rem;
             }
             .token-content h4 {
-                font-size: 1.2em;
+                font-size: 1.2rem;
             }
             .token-content p.description {
-                font-size: 0.85em;
+                font-size: 0.85rem;
             }
             .percentage-buttons {
                 grid-template-columns: repeat(2, 1fr);
             }
-            #dexscreener-embed {
-                padding-bottom: 150%;
+            .connect-section button {
+                font-size: 0.9rem;
+                padding: 8px 20px;
+            }
+            .swap-box input, .trade-button {
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -389,7 +394,7 @@
     <div class="token-container">
         <div class="token-card" id="tokenCard"></div>
         <div id="dexscreener-embed">
-            <iframe src="https://dexscreener.com/shibarium/0xD4301bA08076C14Dfc93fd0a94151E338874D7FE?embed=1&loadChartSettings=0&tabs=0&info=0&chartLeftToolbar=0&chartTheme=dark&theme=dark&chartStyle=0&chartType=usd&interval=15"></iframe>
+            <iframe src="https://dexscreener.com/shibarium/0xD4301bA08076C14Dfc93fd0a94151E338874D7FE?embed=1&loadChartSettings=0&tabs=0&info=0&chartLeftToolbar=0&chartDefaultOnMobile=1&chartTheme=dark&theme=dark&chartStyle=1&chartType=price&interval=1D" loading="lazy"></iframe>
         </div>
     </div>
     <div class="footer">
@@ -398,7 +403,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
     <script>
-        let web3,"}, {"role": "system", "content": "account, router, factory;
+        let web3, account, router, factory;
         const routerAddress = "0x96b16aBD53Bfd765F4CD118590C1d0be8B57DE24";
         const factoryAddress = "0xB9fbdFA27B7ba8BB2d4bB4aB399e4c55F0F7F83a";
         const wboneAddress = "0x839FdB6cc98342B428E074C1573ADF6D48CA3bFd";
@@ -409,12 +414,12 @@
             chainId: "0x6d",
             chainName: "Shibarium",
             nativeCurrency: { name: "BONE", symbol: "BONE", decimals: 18 },
-            rpcUrls: ["https://rpc.shibrpc.com", "https://www.shibrpc.com"],
+            rpcUrls: ["https://rpc.shibrpc.com", "https://www.shibrpc.com", "https://shibarium-rpc.com"],
             blockExplorerUrls: ["https://shibariumscan.io"]
         };
         const erc20Abi = [
-            {"constant":true,"inputs":[{"name":"account","type":"address"}],"name":"balanceOf","outputs":[{"name":"amount","type":"uint256"}],"type":"function"},
-            {"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"amount","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"type":"function"},
+            {"constant":true,"inputs":[{"name":"account","type":"address"}],"name":"balanceOf","outputs":[{"type":"uint256"}],"type":"function"},
+            {"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"amount","type":"uint256"}],"name":"approve","outputs":[{"type":"bool"}],"type":"function"},
             {"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"type":"function"}
         ];
         const routerAbi = [
@@ -426,60 +431,35 @@
             {"inputs":[{"internalType":"address","name":"tokenA","type":"address"},{"internalType":"address","name":"tokenB","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"name":"getPair","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
         ];
         const pairAbi = [
-            {"inputs":[],"name":"getReserves","outputs":[{"internalType":"uint256","name":"_reserve0","type":"uint256"},{"internalType":"uint256","name":"_reserve1","type":"uint256"},{"internalType":"uint32","name":"_blockTimestampLast","type":"uint32"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"getReserves","outputs":[{"internalType":"uint256","name":"reserve0","type":"uint256"},{"internalType":"uint256","name":"reserve1","type":"uint256"},{"internalType":"uint32","name":"blockTimestampLast","type":"uint32"}],"stateMutability":"view","type":"function"},
             {"inputs":[],"name":"token0","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
         ];
         let boneBalance = "0";
         const defaultSlippage = 0.005;
-        const maxPriceImpact = 0.5;
-        const messages = {
-            connectStart: ["Connecting wallet, please wait!", "Sniffing out your wallet..."],
-            connectSuccess: ["Connected to Shibarium!", "Wallet connected, ready to swap!"],
-            connectFail: ["Failed to connect wallet!", "Please install MetaMask!"],
-            swapStart: ["Processing swap...", "Initiating trade..."],
-            swapSuccess: ["Swap successful!", "Trade completed!"],
-            swapFail: ["Swap failed, try again!", "Transaction error!"],
-            swapNoAmount: ["Enter a valid amount!", "Amount cannot be zero!"],
-            insufficientBalance: ["Insufficient balance!", "Not enough tokens!"],
-            highPriceImpact: ["Price impact too high!", "Try a smaller amount!"],
-            insufficientLiquidity: ["Insufficient liquidity!", "Pool lacks enough tokens!"],
-            userDenied: ["Transaction rejected!", "User denied the swap!"],
-            approving: ["Approving tokens...", "Authorizing swap..."],
-            calcStart: ["Calculating output...", "Fetching swap details..."],
-            calcSuccess: (amount, symbol) => [`Estimated: ${amount} ${symbol}`, `You'll get ~${amount} ${symbol}`],
-            calcFail: ["Failed to calculate output!", "No valid trading pair!"]
-        };
-
-        function getRandomMessage(type, param1, param2) {
-            const msg = messages[type];
-            if (typeof msg === 'function') return msg(param1, param2)[Math.floor(Math.random() * 2)];
-            return msg[Math.floor(Math.random() * 2)];
-        }
+        const maxPriceImpact = 50;
+        const maxAllowance = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
 
         function shortenAddress(address) {
             return address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "0x...";
         }
 
-        function showStatus(message, type = "default") {
+        function showStatus(message) {
             const status = document.getElementById("status");
-            status.innerText = message || getRandomMessage(type);
+            status.innerText = message;
             setTimeout(() => status.innerText = "", 5000);
         }
 
         async function tryInitializeWeb3() {
-            for (let i = 0; i < 3; i++) {
-                for (const rpc of shibarium.rpcUrls) {
-                    try {
-                        web3 = new Web3(rpc);
-                        await web3.eth.getBlockNumber();
-                        router = new web3.eth.Contract(routerAbi, routerAddress);
-                        factory = new web3.eth.Contract(factoryAbi, factoryAddress);
-                        return true;
-                    } catch (e) {
-                        console.warn(`RPC ${rpc} failed: ${e.message}`);
-                    }
+            for (const rpc of shibarium.rpcUrls) {
+                try {
+                    web3 = new Web3(rpc);
+                    await web3.eth.getBlockNumber();
+                    router = new web3.eth.Contract(routerAbi, routerAddress);
+                    factory = new web3.eth.Contract(factoryAbi, factoryAddress);
+                    return true;
+                } catch (e) {
+                    console.warn(`RPC ${rpc} failed: ${e.message}`);
                 }
-                await new Promise(resolve => setTimeout(resolve, 1000));
             }
             return false;
         }
@@ -487,13 +467,15 @@
         async function connectWallet() {
             const status = document.getElementById("status");
             const spinner = document.getElementById("globalSpinner");
+            const connectButton = document.getElementById("connectWalletButton");
             try {
-                if (!window.ethereum) throw new Error("No wallet detected");
-                status.innerText = getRandomMessage("connectStart");
+                if (!window.ethereum) throw new Error("Please install MetaMask.");
+                connectButton.disabled = true;
+                status.innerText = "Connecting...";
                 spinner.style.display = "block";
                 web3 = new Web3(window.ethereum);
                 const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-                if (!accounts.length) throw new Error("No accounts found");
+                if (!accounts.length) throw new Error("Please unlock wallet.");
                 account = accounts[0];
                 const chainId = await web3.eth.getChainId();
                 if (Number(chainId) !== 109) {
@@ -509,16 +491,17 @@
                 }
                 router = new web3.eth.Contract(routerAbi, routerAddress);
                 factory = new web3.eth.Contract(factoryAbi, factoryAddress);
-                document.getElementById("connectWalletButton").innerText = shortenAddress(account);
-                showStatus("", "connectSuccess");
+                connectButton.innerText = shortenAddress(account);
+                showStatus("Connected to Shibarium");
                 await updateBalances();
                 updateTradeButtonState();
                 await loadToken();
             } catch (error) {
-                showStatus(error.message, "connectFail");
+                showStatus(`Connection failed: ${error.message}`);
                 resetUI();
             } finally {
                 spinner.style.display = "none";
+                connectButton.disabled = false;
             }
         }
 
@@ -539,8 +522,8 @@
             const balanceRow = card.querySelector(".balance-row");
             const isBuy = card.querySelector(".swap-toggle .buy.active");
             balanceRow.innerHTML = isBuy
-                ? `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(2)}</span>`
-                : `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(balance, "ether")).toFixed(2)}</span>`;
+                ? `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(1)}</span>`
+                : `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(balance, "ether")).toFixed(0)}</span>`;
         }
 
         async function calculateOutput(card, amountIn) {
@@ -552,10 +535,10 @@
                 amountInWei = web3.utils.toBN(web3.utils.toWei(amountIn, "ether"));
             } catch (error) {
                 swapInfo.innerText = "Invalid amount";
-                showStatus("", "swapNoAmount");
+                showStatus("Invalid amount entered");
                 return;
             }
-            swapInfo.innerText = getRandomMessage("calcStart");
+            swapInfo.innerText = "Calculating...";
             try {
                 let bestOutput = web3.utils.toBN("0");
                 let routes;
@@ -575,17 +558,16 @@
                 }
                 if (bestOutput.eq(web3.utils.toBN("0"))) {
                     swapInfo.innerText = "No valid trading pair";
-                    showStatus("", "calcFail");
+                    showStatus("No valid trading pair found");
                     return;
                 }
                 const outputEther = parseFloat(web3.utils.fromWei(bestOutput, "ether")).toFixed(6);
                 swapInfo.innerText = `Estimated: ${outputEther} ${isBuy ? "FEED" : "BONE"}`;
-                showStatus("", "calcSuccess", outputEther, isBuy ? "FEED" : "BONE");
                 card.dataset.routes = JSON.stringify(routes);
                 card.dataset.bestOutput = bestOutput.toString();
             } catch (error) {
                 swapInfo.innerText = "Error calculating output";
-                showStatus("", "calcFail");
+                showStatus("Failed to calculate output");
             }
         }
 
@@ -601,15 +583,18 @@
             const spinner = document.getElementById("globalSpinner");
             try {
                 spinner.style.display = "block";
+                showStatus("Loading token...");
                 if (!web3 && !await tryInitializeWeb3()) {
-                    showStatus("Failed to connect to Shibarium", "connectFail");
+                    showStatus("Failed to connect to Shibarium");
                     return;
                 }
                 const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress);
                 let tokenBalance = "0";
                 if (account) tokenBalance = await tokenContract.methods.balanceOf(account).call();
-                const boneBalanceDisplay = account ? parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(2) : "0";
+                const boneBalanceDisplay = account ? parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(1) : "0";
                 card.dataset.tokenAddress = tokenAddress;
+                card.dataset.symbol = "FEED";
+                card.dataset.tokenBalance = tokenBalance;
                 card.innerHTML = `
                     <div class="token-header">
                         <h3>Created by: shibariumfun.shib</h3>
@@ -643,7 +628,6 @@
                         <div class="swap-box">
                             <div class="swap-toggle">
                                 <button class="buy active">Buy</button>
- 等价于
                                 <button class="sell">Sell</button>
                             </div>
                             <div class="balance-row">
@@ -662,7 +646,7 @@
                                 <button data-percentage="100">MAX</button>
                             </div>
                             <div class="swap-info">Enter amount to see estimated output</div>
-                            <button class="trade-button" disabled>
+                            <button class="trade-button" data-address="${tokenAddress}" disabled>
                                 Buy
                                 <span class="spinner"></span>
                             </button>
@@ -670,20 +654,22 @@
                     </div>
                 `;
                 setupCardListeners(card);
+                showStatus("");
             } catch (error) {
-                showStatus("Failed to load token", "swapFail");
+                showStatus(`Failed to load token: ${error.message}`);
             } finally {
                 spinner.style.display = "none";
             }
         }
 
         function setupCardListeners(card) {
+            const tokenAddress = card.dataset.tokenAddress;
             card.querySelectorAll(".copy-button").forEach(button => {
                 button.addEventListener("click", () => {
                     navigator.clipboard.writeText(button.dataset.address).then(() => {
                         button.classList.add("copied");
                         setTimeout(() => button.classList.remove("copied"), 1000);
-                    }).catch(() => showStatus("Failed to copy", "swapFail"));
+                    }).catch(() => showStatus("Failed to copy address"));
                 });
             });
             card.querySelectorAll(".swap-toggle button").forEach(button => {
@@ -697,27 +683,28 @@
                     const input = card.querySelector(".amount-input");
                     const percentageButtons = card.querySelectorAll(".percentage-buttons button");
                     if (isBuy) {
-                        balanceRow.innerHTML = `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(2)}</span>`;
+                        balanceRow.innerHTML = `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(1)}</span>`;
                         tokenInfo.innerHTML = `<img src="${boneLogo}" alt="BONE"><span>BONE</span>`;
                         tradeButton.innerHTML = "Buy <span class='spinner'></span>";
                         percentageButtons.forEach(btn => btn.onclick = () => setAmount(card, btn.dataset.percentage, "buy"));
                     } else {
-                        const tokenBalance = await new web3.eth.Contract(erc20Abi, tokenAddress).methods.balanceOf(account).call();
+                        const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress);
+                        const tokenBalance = await tokenContract.methods.balanceOf(account).call();
                         card.dataset.tokenBalance = tokenBalance;
-                        balanceRow.innerHTML = `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(tokenBalance, "ether")).toFixed(2)}</span>`;
+                        balanceRow.innerHTML = `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(tokenBalance, "ether")).toFixed(0)}</span>`;
                         tokenInfo.innerHTML = `<img src="${tokenImage}" alt="FEED"><span>FEED</span>`;
                         tradeButton.innerHTML = "Sell <span class='spinner'></span>";
                         percentageButtons.forEach(btn => btn.onclick = () => setAmount(card, btn.dataset.percentage, "sell"));
                     }
                     input.value = "";
-                    updateTradeButtonState(card);
                     card.querySelector(".swap-info").innerText = "Enter amount to see estimated output";
+                    updateTradeButtonState(card);
                 });
             });
             card.querySelector(".trade-button").addEventListener("click", async () => {
                 const isBuy = card.querySelector(".swap-toggle .buy.active");
-                if (isBuy) await buyToken(card);
-                else await sellToken(card);
+                if (isBuy) await buyToken(tokenAddress, card.querySelector(".trade-button"), card);
+                else await sellToken(tokenAddress, card.querySelector(".trade-button"), card);
             });
             card.querySelector(".amount-input").addEventListener("input", () => {
                 updateTradeButtonState(card);
@@ -735,7 +722,7 @@
 
         async function setAmount(card, percentage, type) {
             if (!web3 || !account) {
-                showStatus("Connect wallet first", "connectFail");
+                showStatus("Please connect wallet");
                 return;
             }
             const input = card.querySelector(".amount-input");
@@ -752,33 +739,32 @@
             calculateOutput(card, input.value);
         }
 
-        async function approveToken(tokenAddress, amount) {
-            const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress);
-            const allowance = await tokenContract.methods.allowance(account, routerAddress).call();
-            if (web3.utils.toBN(allowance).lt(web3.utils.toBN(amount))) {
-                showStatus("", "approving");
-                await tokenContract.methods.approve(routerAddress, amount).send({ from: account });
-                showStatus("Token approved");
+        async function buyToken(tokenAddress, button, card) {
+            if (!web3 || !account) {
+                showStatus("Please connect wallet");
+                return;
             }
-        }
-
-        async function buyToken(card) {
-            if (!web3 || !account) return showStatus("Connect wallet", "connectFail");
-            const button = card.querySelector(".trade-button");
             const amountIn = card.querySelector(".amount-input").value;
-            if (!amountIn || amountIn <= 0) return showStatus("Invalid amount", "swapNoAmount");
+            if (!amountIn || amountIn <= 0) {
+                showStatus("Please enter a valid amount");
+                return;
+            }
             let amountInWei;
             try {
                 amountInWei = web3.utils.toBN(web3.utils.toWei(amountIn, "ether"));
             } catch (e) {
-                return showStatus("Invalid amount format", "swapNoAmount");
+                showStatus("Invalid amount entered");
+                return;
             }
-            if (web3.utils.toBN(boneBalance).lt(amountInWei)) return showStatus("Insufficient BONE", "insufficientBalance");
+            if (web3.utils.toBN(boneBalance).lt(amountInWei)) {
+                showStatus("Insufficient BONE balance");
+                return;
+            }
             const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
             try {
                 button.classList.add("loading");
                 button.disabled = true;
-                showStatus("", "swapStart");
+                showStatus("Checking trading pair...");
                 let bestOutput = web3.utils.toBN("0");
                 let routes;
                 for (const stable of [true, false]) {
@@ -793,62 +779,81 @@
                         }
                     }
                 }
-                if (!routes || bestOutput.eq(web3.utils.toBN("0"))) return showStatus("No trading pair", "calcFail");
+                if (!routes || bestOutput.eq(web3.utils.toBN("0"))) {
+                    showStatus("No valid trading pair found");
+                    return;
+                }
                 const pairAddress = await factory.methods.getPair(wboneAddress, tokenAddress, routes[0].stable).call();
                 const pairContract = new web3.eth.Contract(pairAbi, pairAddress);
                 const reserves = await pairContract.methods.getReserves().call();
                 const token0 = await pairContract.methods.token0().call();
-                const reserveFrom = token0 === wboneAddress ? reserves._reserve0 : reserves._reserve1;
-                const reserveTo = token0 === wboneAddress ? reserves._reserve1 : reserves._reserve0;
+                const reserveFrom = token0 === wboneAddress ? reserves.reserve0 : reserves.reserve1;
+                const reserveTo = token0 === wboneAddress ? reserves.reserve1 : reserves.reserve0;
                 const reserveFromBN = web3.utils.toBN(reserveFrom);
                 const reserveToBN = web3.utils.toBN(reserveTo);
                 const priceImpact = amountInWei.mul(web3.utils.toBN(100)).div(reserveFromBN.add(amountInWei));
-                if (priceImpact.gt(web3.utils.toBN(maxPriceImpact * 100))) return showStatus(`Price impact too high (${priceImpact.toString()}%)`, "highPriceImpact");
-                if (bestOutput.gt(reserveToBN)) return showStatus("Insufficient liquidity", "insufficientLiquidity");
+                if (priceImpact.gt(web3.utils.toBN(maxPriceImpact))) {
+                    showStatus(`Price impact too high (${priceImpact.toString()}%)`);
+                    return;
+                }
+                if (bestOutput.gt(reserveToBN)) {
+                    showStatus("Insufficient liquidity");
+                    return;
+                }
                 const slippageFactor = web3.utils.toBN(1000 - defaultSlippage * 1000);
                 const amountOutMin = bestOutput.mul(slippageFactor).div(web3.utils.toBN(1000));
+                showStatus("Processing buy...");
                 await router.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(
                     amountOutMin.toString(),
                     routes,
                     account,
                     deadline
                 ).send({ from: account, value: amountInWei });
-                showStatus("", "swapSuccess");
+                showStatus("Buy successful!");
                 await updateBalances();
                 card.querySelector(".amount-input").value = "";
                 card.querySelector(".swap-info").innerText = "Enter amount to see estimated output";
                 updateTradeButtonState(card);
             } catch (error) {
-                let errorMessage = error.message || "Swap failed";
+                let errorMessage = error.message || "Transaction failed";
                 if (error.code === 4001) errorMessage = "User rejected transaction";
                 else if (error.message.includes("INSUFFICIENT_OUTPUT_AMOUNT")) errorMessage = "Slippage too high";
                 else if (error.message.includes("INSUFFICIENT_LIQUIDITY")) errorMessage = "Insufficient liquidity";
-                showStatus(errorMessage, error.code === 4001 ? "userDenied" : "swapFail");
+                showStatus(errorMessage);
             } finally {
                 button.classList.remove("loading");
                 button.disabled = false;
             }
         }
 
-        async function sellToken(card) {
-            if (!web3 || !account) return showStatus("Connect wallet", "connectFail");
-            const button = card.querySelector(".trade-button");
+        async function sellToken(tokenAddress, button, card) {
+            if (!web3 || !account) {
+                showStatus("Please connect wallet");
+                return;
+            }
             const amountIn = card.querySelector(".amount-input").value;
-            if (!amountIn || amountIn <= 0) return showStatus("Invalid amount", "swapNoAmount");
+            if (!amountIn || amountIn <= 0) {
+                showStatus("Please enter a valid amount");
+                return;
+            }
             let amountInWei;
             try {
                 amountInWei = web3.utils.toBN(web3.utils.toWei(amountIn, "ether"));
             } catch (e) {
-                return showStatus("Invalid amount format", "swapNoAmount");
+                showStatus("Invalid amount entered");
+                return;
             }
             const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress);
             const tokenBalance = await tokenContract.methods.balanceOf(account).call();
-            if (web3.utils.toBN(tokenBalance).lt(amountInWei)) return showStatus("Insufficient FEED", "insufficientBalance");
+            if (web3.utils.toBN(tokenBalance).lt(amountInWei)) {
+                showStatus("Insufficient FEED balance");
+                return;
+            }
             const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
             try {
                 button.classList.add("loading");
                 button.disabled = true;
-                showStatus("", "swapStart");
+                showStatus("Checking trading pair...");
                 let bestOutput = web3.utils.toBN("0");
                 let routes;
                 for (const stable of [true, false]) {
@@ -863,21 +868,32 @@
                         }
                     }
                 }
-                if (!routes || bestOutput.eq(web3.utils.toBN("0"))) return showStatus("No trading pair", "calcFail");
+                if (!routes || bestOutput.eq(web3.utils.toBN("0"))) {
+                    showStatus("No valid trading pair found");
+                    return;
+                }
                 const pairAddress = await factory.methods.getPair(tokenAddress, wboneAddress, routes[0].stable).call();
                 const pairContract = new web3.eth.Contract(pairAbi, pairAddress);
                 const reserves = await pairContract.methods.getReserves().call();
                 const token0 = await pairContract.methods.token0().call();
-                const reserveFrom = token0 === tokenAddress ? reserves._reserve0 : reserves._reserve1;
-                const reserveTo = token0 === tokenAddress ? reserves._reserve1 : reserves._reserve0;
+                const reserveFrom = token0 === tokenAddress ? reserves.reserve0 : reserves.reserve1;
+                const reserveTo = token0 === tokenAddress ? reserves.reserve1 : reserves.reserve0;
                 const reserveFromBN = web3.utils.toBN(reserveFrom);
                 const reserveToBN = web3.utils.toBN(reserveTo);
                 const priceImpact = amountInWei.mul(web3.utils.toBN(100)).div(reserveFromBN.add(amountInWei));
-                if (priceImpact.gt(web3.utils.toBN(maxPriceImpact * 100))) return showStatus(`Price impact too high (${priceImpact.toString()}%)`, "highPriceImpact");
-                if (bestOutput.gt(reserveToBN)) return showStatus("Insufficient liquidity", "insufficientLiquidity");
+                if (priceImpact.gt(web3.utils.toBN(maxPriceImpact))) {
+                    showStatus(`Price impact too high (${priceImpact.toString()}%)`);
+                    return;
+                }
+                if (bestOutput.gt(reserveToBN)) {
+                    showStatus("Insufficient liquidity");
+                    return;
+                }
                 const slippageFactor = web3.utils.toBN(1000 - defaultSlippage * 1000);
                 const amountOutMin = bestOutput.mul(slippageFactor).div(web3.utils.toBN(1000));
-                await approveToken(tokenAddress, amountInWei);
+                showStatus("Approving token...");
+                await tokenContract.methods.approve(routerAddress, maxAllowance).send({ from: account });
+                showStatus("Processing sell...");
                 await router.methods.swapExactTokensForETHSupportingFeeOnTransferTokens(
                     amountInWei.toString(),
                     amountOutMin.toString(),
@@ -885,17 +901,17 @@
                     account,
                     deadline
                 ).send({ from: account });
-                showStatus("", "swapSuccess");
+                showStatus("Sell successful!");
                 await updateBalances();
                 card.querySelector(".amount-input").value = "";
                 card.querySelector(".swap-info").innerText = "Enter amount to see estimated output";
                 updateTradeButtonState(card);
             } catch (error) {
-                let errorMessage = error.message || "Swap failed";
+                let errorMessage = error.message || "Transaction failed";
                 if (error.code === 4001) errorMessage = "User rejected transaction";
                 else if (error.message.includes("INSUFFICIENT_OUTPUT_AMOUNT")) errorMessage = "Slippage too high";
                 else if (error.message.includes("INSUFFICIENT_LIQUIDITY")) errorMessage = "Insufficient liquidity";
-                showStatus(errorMessage, error.code === 4001 ? "userDenied" : "swapFail");
+                showStatus(errorMessage);
             } finally {
                 button.classList.remove("loading");
                 button.disabled = false;
@@ -905,11 +921,11 @@
         document.getElementById("connectWalletButton").addEventListener("click", connectWallet);
         window.addEventListener("load", async () => {
             if (!window.location.protocol.includes("http")) {
-                showStatus("Please run via server", "swapFail");
+                showStatus('Please run via server (e.g., "npx serve")');
                 return;
             }
             if (await tryInitializeWeb3()) loadToken();
-            else showStatus("Failed to connect to Shibarium", "connectFail");
+            else showStatus("Failed to connect to Shibarium");
         });
     </script>
 </body>
