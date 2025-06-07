@@ -498,10 +498,7 @@
                     web3 = new Web3(window.ethereum);
                     const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
                     if (!accounts.length) {
-                        networkStatus.innerText = "No accounts found. Please unlock your wallet.";
-                        dogMessage.innerText = getRandomMessage("connectFail");
-                        connectButton.disabled = false;
-                        return;
+                        throw new Error("No accounts found. Please unlock your wallet.");
                     }
                     const chainId = await web3.eth.getChainId();
                     if (chainId !== 109) {
@@ -515,13 +512,17 @@
                     dogMessage.innerText = getRandomMessage("connectSuccess");
                     await updateBalances();
                 } else {
-                    networkStatus.innerText = "Please install MetaMask!";
-                    dogMessage.innerText = getRandomMessage("connectFail");
+                    throw new Error("Please install MetaMask!");
                 }
             } catch (error) {
-                console.error(error);
-                document.getElementById("networkStatus").innerText = "Failed to connect wallet.";
+                console.error("Connection error:", error);
+                document.getElementById("networkStatus").innerText = `Failed to connect wallet: ${error.message}`;
                 document.getElementById("dogMessage").innerText = getRandomMessage("connectFail");
+                web3 = null;
+                account = null;
+                router = null;
+                factory = null;
+                await loadToken();
             } finally {
                 document.getElementById("connectWalletButton").disabled = false;
             }
@@ -553,7 +554,7 @@
                     account = null;
                     router = null;
                     factory = null;
-                    document.getElementById("connectWalletButton").innerText = "Connect Wallet";
+                    document.getElementById("connectWalletButton").innerText = "Connect wallet";
                     document.getElementById("networkStatus").innerText = "Click to connect...";
                     document.getElementById("dogMessage").innerText = "Woof! Connect your wallet to start swapping, pup!";
                 }
@@ -564,7 +565,7 @@
                     account = null;
                     router = null;
                     factory = null;
-                    document.getElementById("connectWalletButton").innerText = "Connect Wallet";
+                    document.getElementById("connectWalletButton").innerText = "Connect wallet";
                     document.getElementById("networkStatus").innerText = "Wrong network! Please switch to Shibarium.";
                     document.getElementById("dogMessage").innerText = "Woof! Wrong chain, pup! Switch to Shibarium!";
                 } else {
@@ -573,16 +574,19 @@
             });
         }
         async function updateBalances() {
-            if (!account) return;
+            if (!web3 || !account) return;
             const card = document.getElementById("tokenCard");
+            if (!card) return;
+            const balanceRow = card.querySelector(".balance-row");
+            if (!balanceRow) return;
             if (isFromBone) {
                 fromBalance = await web3.eth.getBalance(account);
-                card.querySelector(".balance-row").innerHTML = `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(fromBalance, "ether")).toFixed(2)}</span>`;
+                balanceRow.innerHTML = `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(fromBalance, "ether")).toFixed(2)}</span>`;
             } else {
                 const tokenContract = new web3.eth.Contract(erc20Abi, feedToken.address);
                 fromBalance = await tokenContract.methods.balanceOf(account).call();
                 card.dataset.tokenBalance = fromBalance;
-                card.querySelector(".balance-row").innerHTML = `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(fromBalance, "ether")).toFixed(2)}</span>`;
+                balanceRow.innerHTML = `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(fromBalance, "ether")).toFixed(2)}</span>`;
             }
             const toBalance = isFromBone
                 ? await new web3.eth.Contract(erc20Abi, feedToken.address).methods.balanceOf(account).call()
@@ -647,7 +651,7 @@
             let boneBalance = "0";
             try {
                 dogMessage.innerText = "Woofing FEED...";
-                if (account) {
+                if (account && web3) {
                     const tokenContract = new web3.eth.Contract(erc20Abi, feedToken.address);
                     tokenBalance = await tokenContract.methods.balanceOf(account).call();
                     boneBalance = await web3.eth.getBalance(account);
@@ -657,7 +661,7 @@
             }
             card.dataset.tokenBalance = tokenBalance;
             card.dataset.toBalance = boneBalance;
-            const boneBalanceDisplay = parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(2);
+            const boneBalanceDisplay = account && web3 ? parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(2) : "0.00";
             card.innerHTML = `
                 <div class="token-header">
                     <h3>Created by: FEED</h3>
@@ -804,7 +808,7 @@
             const card = document.getElementById("tokenCard");
             const tradeButton = card.querySelector(".trade-button");
             const dogMessage = document.getElementById("dogMessage");
-            if (web3.utils.toBN(allowance) < amountInWei) {
+            if (web3.utils.toBN(allowance) < web3.utils.toBN(amountInWei)) {
                 tradeButton.innerText = "Approving...";
                 tradeButton.disabled = true;
                 dogMessage.innerText = getRandomMessage("approving");
