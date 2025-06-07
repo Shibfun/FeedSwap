@@ -22,13 +22,13 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background: #333;
+            background: #121212;
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 16px;
         }
         .header {
             text-align: center;
@@ -36,23 +36,23 @@
         }
         .header h1 {
             font-size: clamp(2rem, 5vw, 2.5rem);
-            font-weight: bold;
-            color: #fff;
+            font-weight: 700;
+            color: var(--primary-color);
             letter-spacing: 1px;
         }
         .connect-section {
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
         .connect-section button {
             padding: 10px 24px;
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: #FFF;
             border: none;
-            border-radius: 20px;
-            font-weight: bold;
+            border-radius: 24px;
+            font-weight: 600;
             cursor: pointer;
             font-size: 1rem;
-            transition: transform 0.2s, background 0.2s;
+            transition: transform 0.2s, background 0.3s;
         }
         .connect-section button:hover {
             transform: scale(1.05);
@@ -66,12 +66,12 @@
             gap: 24px;
             justify-content: center;
         }
-        .card {
+        .token-card {
             background: var(--card-bg);
             border: 1px solid #333;
             border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 500px;
             display: flex;
@@ -86,7 +86,7 @@
         }
         .token-header h3 {
             font-size: 1.1rem;
-            font-weight: bold;
+            font-weight: 600;
             flex-grow: 1;
         }
         .token-header .copy-button {
@@ -130,13 +130,13 @@
         }
         .token-content h4 {
             font-size: 1.4rem;
-            font-weight: bold;
+            font-weight: 600;
             margin-bottom: 12px;
-            color: #fff;
+            color: var(--primary-color);
         }
         .token-content p.description {
             font-size: 0.9rem;
-            color: #fff;
+            color: #B0B0B0;
             margin-bottom: 16px;
             line-height: 1.5;
         }
@@ -153,7 +153,7 @@
             filter: invert(1);
         }
         .token-content .info a {
-            color: #fff;
+            color: var(--primary-color);
             text-decoration: none;
         }
         .token-content .info a:hover {
@@ -178,7 +178,7 @@
             border: none;
             background: #333;
             color: var(--text-color);
-            font-weight: bold;
+            font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
             transition: background 0.2s, color 0.2s;
@@ -198,14 +198,14 @@
             justify-content: space-between;
             font-size: 0.85rem;
             margin-bottom: 8px;
-            color: #fff;
+            color: var(--primary-color);
         }
         .token-info {
             display: flex;
             align-items: center;
             padding: 8px;
             background: var(--card-bg);
-            border-radius: 10px;
+            border-radius: 8px;
             margin-bottom: 8px;
         }
         .token-info img {
@@ -220,9 +220,9 @@
             width: 100%;
             padding: 10px;
             background: var(--card-bg);
-            border: 2px solid #333;
-            border-radius: 4px;
-            color: #fff;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: var(--text-color);
             font-size: 0.9rem;
             text-align: right;
             outline: none;
@@ -235,12 +235,12 @@
         }
         .percentage-buttons button {
             background: #333;
-            border: 2px solid #fff;
-            border-radius: 5px;
+            border: 1px solid #444;
+            border-radius: 8px;
             cursor: pointer;
-            color: #fff;
+            color: var(--text-color);
             font-size: 0.85rem;
-            font-weight: bold;
+            font-weight: 600;
             height: 36px;
             display: flex;
             align-items: center;
@@ -250,25 +250,25 @@
         .percentage-buttons button:hover {
             background: var(--primary-color);
             color: #FFF;
-            border: none;
+            transform: scale(1.05);
         }
         .percentage-buttons button.active {
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: #FFF;
-            border: none;
+            border-color: var(--primary-color);
         }
         .swap-box .trade-button {
             padding: 10px;
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: #FFF;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: normal;
+            font-weight: 600;
             width: 100%;
-            font-size: 20px;
+            font-size: 0.9rem;
             position: relative;
-            transition: background 0.2s;
+            transition: background 0.3s;
         }
         .swap-box .trade-button:disabled {
             background: #555;
@@ -295,7 +295,7 @@
         }
         .swap-info {
             font-size: 0.85rem;
-            color: #ddd;
+            color: var(--primary-color);
             margin-top: 8px;
         }
         #dexscreener-embed {
@@ -323,7 +323,7 @@
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 24px auto;
             display: none;
         }
         @keyframes spin {
@@ -331,24 +331,24 @@
             100% { transform: rotate(360deg); }
         }
         .status {
-            font-size: 1em;
-            color: #fff;
+            font-size: 0.9rem;
+            color: var(--primary-color);
             text-align: center;
             margin: 12px 0;
         }
         .footer {
-            font-size: 0.9em;
-            color: #fff;
+            font-size: 0.8rem;
+            color: #B0B0B0;
             text-align: center;
-            margin-top: 20px auto;
-            padding-bottom: 20px;
+            margin-top: auto;
+            padding: 16px;
         }
         .footer a {
-            color: #fff;
+            color: var(--primary-color);
             text-decoration: none;
         }
         .footer a:hover {
-            color: var(--primary-color);
+            color: var(--secondary-color);
         }
         @media (max-width: 768px) {
             body {
@@ -357,7 +357,7 @@
             .header h1 {
                 font-size: 1.8rem;
             }
-            .card {
+            .token-card {
                 max-width: 100%;
             }
             .token-header h3 {
@@ -377,7 +377,7 @@
                 padding: 8px 20px;
             }
             .swap-box input, .trade-button {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -392,7 +392,7 @@
     <div id="status" class="status"></div>
     <div class="global-spinner" id="globalSpinner"></div>
     <div class="token-container">
-        <div class="card" id="tokenCard"></div>
+        <div class="token-card" id="tokenCard"></div>
         <div id="dexscreener-embed">
             <iframe src="https://dexscreener.com/shibarium/0xD4301bA08076C14Dfc93fd0a94151E338874D7FE?embed=1&loadChartSettings=0&tabs=0&info=0&chartLeftToolbar=0&chartDefaultOnMobile=1&chartTheme=dark&theme=dark&chartStyle=1&chartType=price&interval=1D" loading="lazy"></iframe>
         </div>
@@ -522,8 +522,8 @@
             const balanceRow = card.querySelector(".balance-row");
             const isBuy = card.querySelector(".swap-toggle .buy.active");
             balanceRow.innerHTML = isBuy
-                ? `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(1)}</span>`
-                : `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(balance, "ether")).toFixed(0)}</span>`;
+                ? `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(2)}</span>`
+                : `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(balance, "ether")).toFixed(2)}</span>`;
         }
 
         async function calculateOutput(card, amountIn) {
@@ -545,9 +545,9 @@
             try {
                 let bestOutput = web3.utils.toBN("0");
                 let routes;
+                const from = isBuy ? wboneAddress : tokenAddress;
+                const to = isBuy ? tokenAddress : wboneAddress;
                 for (const stable of [true, false]) {
-                    const from = isBuy ? wboneAddress : tokenAddress;
-                    const to = isBuy ? tokenAddress : wboneAddress;
                     const pairAddress = await factory.methods.getPair(from, to, stable).call();
                     if (pairAddress !== "0x0000000000000000000000000000000000000000") {
                         const tempRoutes = [{ from, to, stable }];
@@ -565,7 +565,7 @@
                     return;
                 }
                 const outputEther = parseFloat(web3.utils.fromWei(bestOutput, "ether")).toFixed(6);
-                swapInfo.innerText = `Estimated: ${outputEther} ${isBuy ? "FEED" : "BONE"}`;
+                swapInfo.innerText = `Estimated output: ${outputEther} ${isBuy ? "FEED" : "BONE"}`;
                 card.dataset.routes = JSON.stringify(routes);
                 card.dataset.bestOutput = bestOutput.toString();
             } catch (error) {
@@ -594,7 +594,7 @@
                 const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress);
                 let tokenBalance = "0";
                 if (account) tokenBalance = await tokenContract.methods.balanceOf(account).call();
-                const boneBalanceDisplay = account ? parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(1) : "0";
+                const boneBalanceDisplay = account ? parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(2) : "0";
                 card.dataset.tokenAddress = tokenAddress;
                 card.dataset.symbol = "FEED";
                 card.dataset.tokenBalance = tokenBalance;
@@ -611,16 +611,16 @@
                         <h4>FEED</h4>
                         <p class="description">FEED enhances Shibarium’s ecosystem by incentivizing participation and supporting SHIB’s deflationary mechanics through its unique burning process.</p>
                         <div class="info">
-                            <img src="https://img.icons8.com/ios-filled/16/1.png" alt="Website">
+                            <img src="https://img.icons8.com/ios-filled/16/000000/link.png" alt="Website">
                             <a href="https://feed.shib.io/" target="_blank">shib.club</a>
                         </div>
                         <div class="info">
-                            <img src="https://img.icons8.com/ios-filled/16/x.png" alt="Twitter">
-                            <a href="https://x.com/woofswap" target="_blank">@woofswap</a>
+                            <img src="https://img.icons8.com/ios-filled/16/000000/twitter.png" alt="Twitter">
+                            <a href="https://x.com/feedevery" target="_blank">@feedevery</a>
                         </div>
                         <div class="info">
-                            <img src="https://img.icons8.com/ios-filled/16/telegram-app.png" alt="Telegram">
-                            <a href="https://t.me/ShibariumSRC20" target="_blank">@ShibariumSRC20</a>
+                            <img src="https://img.icons8.com/ios-filled/16/000000/telegram-app.png" alt="Telegram">
+                            <a href="https://t.me/FEED" target="_blank">FEED</a>
                         </div>
                     </div>
                     <div class="trade-section">
@@ -682,7 +682,7 @@
                     const input = card.querySelector(".amount-input");
                     const percentageButtons = card.querySelectorAll(".percentage-buttons button");
                     if (isBuy) {
-                        balanceRow.innerHTML = `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(1)}</span>`;
+                        balanceRow.innerHTML = `<span>BONE</span><span>Balance: ${parseFloat(web3.utils.fromWei(boneBalance, "ether")).toFixed(2)}</span>`;
                         tokenInfo.innerHTML = `<img src="${boneLogo}" alt="BONE"><span>BONE</span>`;
                         tradeButton.innerHTML = "Buy <span class='spinner'></span>";
                         percentageButtons.forEach(btn => btn.onclick = () => setAmount(card, btn.dataset.percentage, "buy"));
@@ -690,7 +690,7 @@
                         const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress);
                         const tokenBalance = await tokenContract.methods.balanceOf(account).call();
                         card.dataset.tokenBalance = tokenBalance;
-                        balanceRow.innerHTML = `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(tokenBalance, "ether")).toFixed(0)}</span>`;
+                        balanceRow.innerHTML = `<span>FEED</span><span>Balance: ${parseFloat(web3.utils.fromWei(tokenBalance, "ether")).toFixed(2)}</span>`;
                         tokenInfo.innerHTML = `<img src="${tokenImage}" alt="FEED"><span>FEED</span>`;
                         tradeButton.innerHTML = "Sell <span class='spinner'></span>";
                         percentageButtons.forEach(btn => btn.onclick = () => setAmount(card, btn.dataset.percentage, "sell"));
@@ -702,8 +702,8 @@
             });
             card.querySelector(".trade-button").addEventListener("click", async () => {
                 const isBuy = card.querySelector(".swap-toggle .buy.active");
-                if (isBuy) await buyToken(tokenAddress, card.querySelector(".trade-button"), card);
-                else await sellToken(tokenAddress, card.querySelector(".trade-button"), card);
+                if (isBuy) await swapTokens(true, card);
+                else await swapTokens(false, card);
             });
             card.querySelector(".amount-input").addEventListener("input", () => {
                 updateTradeButtonState(card);
@@ -738,12 +738,25 @@
             calculateOutput(card, input.value);
         }
 
-        async function buyToken(tokenAddress, button, card) {
+        async function approveToken(tokenAddress, amount) {
+            if (tokenAddress === wboneAddress) return;
+            const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress);
+            const allowance = await tokenContract.methods.allowance(account, routerAddress).call();
+            if (web3.utils.toBN(allowance).lt(web3.utils.toBN(amount))) {
+                showStatus("Approving token...");
+                await tokenContract.methods.approve(routerAddress, maxAllowance).send({ from: account });
+                showStatus("Token approved");
+            }
+        }
+
+        async function swapTokens(isBuy, card) {
             if (!web3 || !account) {
                 showStatus("Please connect wallet");
                 return;
             }
             const amountIn = card.querySelector(".amount-input").value;
+            const tradeButton = card.querySelector(".trade-button");
+            const swapInfo = card.querySelector(".swap-info");
             if (!amountIn || amountIn <= 0) {
                 showStatus("Please enter a valid amount");
                 return;
@@ -751,25 +764,28 @@
             let amountInWei;
             try {
                 amountInWei = web3.utils.toBN(web3.utils.toWei(amountIn, "ether"));
-            } catch (e) {
+            } catch (error) {
                 showStatus("Invalid amount entered");
                 return;
             }
-            if (web3.utils.toBN(boneBalance).lt(amountInWei)) {
-                showStatus("Insufficient BONE balance");
+            const fromToken = isBuy ? wboneAddress : tokenAddress;
+            const toToken = isBuy ? tokenAddress : wboneAddress;
+            const balanceToCheck = isBuy ? boneBalance : card.dataset.tokenBalance;
+            if (web3.utils.toBN(balanceToCheck).lt(amountInWei)) {
+                showStatus(`Insufficient ${isBuy ? "BONE" : "FEED"} balance`);
                 return;
             }
             const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
             try {
-                button.classList.add("loading");
-                button.disabled = true;
+                tradeButton.classList.add("loading");
+                tradeButton.disabled = true;
                 showStatus("Checking trading pair...");
                 let bestOutput = web3.utils.toBN("0");
                 let routes;
                 for (const stable of [true, false]) {
-                    const pairAddress = await factory.methods.getPair(wboneAddress, tokenAddress, stable).call();
+                    const pairAddress = await factory.methods.getPair(fromToken, toToken, stable).call();
                     if (pairAddress !== "0x0000000000000000000000000000000000000000") {
-                        const tempRoutes = [{ from: wboneAddress, to: tokenAddress, stable }];
+                        const tempRoutes = [{ from: fromToken, to: toToken, stable }];
                         const amounts = await router.methods.getAmountsOut(amountInWei, tempRoutes).call();
                         const output = web3.utils.toBN(amounts[amounts.length - 1]);
                         if (output.gt(bestOutput)) {
@@ -782,12 +798,12 @@
                     showStatus("No valid trading pair found");
                     return;
                 }
-                const pairAddress = await factory.methods.getPair(wboneAddress, tokenAddress, routes[0].stable).call();
+                const pairAddress = await factory.methods.getPair(fromToken, toToken, routes[0].stable).call();
                 const pairContract = new web3.eth.Contract(pairAbi, pairAddress);
                 const reserves = await pairContract.methods.getReserves().call();
                 const token0 = await pairContract.methods.token0().call();
-                const reserveFrom = token0 === wboneAddress ? reserves.reserve0 : reserves.reserve1;
-                const reserveTo = token0 === wboneAddress ? reserves.reserve1 : reserves.reserve0;
+                const reserveFrom = token0 === fromToken ? reserves.reserve0 : reserves.reserve1;
+                const reserveTo = token0 === fromToken ? reserves.reserve1 : reserves.reserve0;
                 const reserveFromBN = web3.utils.toBN(reserveFrom);
                 const reserveToBN = web3.utils.toBN(reserveTo);
                 const priceImpact = amountInWei.mul(web3.utils.toBN(100)).div(reserveFromBN.add(amountInWei));
@@ -801,17 +817,28 @@
                 }
                 const slippageFactor = web3.utils.toBN(1000 - defaultSlippage * 1000);
                 const amountOutMin = bestOutput.mul(slippageFactor).div(web3.utils.toBN(1000));
-                showStatus("Processing buy...");
-                await router.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(
-                    amountOutMin.toString(),
-                    routes,
-                    account,
-                    deadline
-                ).send({ from: account, value: amountInWei });
-                showStatus("Buy successful!");
+                showStatus("Processing swap...");
+                if (!isBuy) await approveToken(tokenAddress, amountInWei);
+                if (isBuy) {
+                    await router.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(
+                        amountOutMin.toString(),
+                        routes,
+                        account,
+                        deadline
+                    ).send({ from: account, value: amountInWei });
+                } else {
+                    await router.methods.swapExactTokensForETHSupportingFeeOnTransferTokens(
+                        amountInWei.toString(),
+                        amountOutMin.toString(),
+                        routes,
+                        account,
+                        deadline
+                    ).send({ from: account });
+                }
+                showStatus("Swap successful!");
                 await updateBalances();
                 card.querySelector(".amount-input").value = "";
-                card.querySelector(".swap-info").innerText = "Enter a valid amount";
+                swapInfo.innerText = "Enter a valid amount";
                 updateTradeButtonState(card);
             } catch (error) {
                 let errorMessage = error.message || "Transaction failed";
@@ -820,100 +847,8 @@
                 else if (error.message.includes("INSUFFICIENT_LIQUIDITY")) errorMessage = "Insufficient liquidity";
                 showStatus(errorMessage);
             } finally {
-                button.classList.remove("loading");
-                button.disabled = false;
-            }
-        }
-
-        async function sellToken(tokenAddress, button, card) {
-            if (!web3 || !account) {
-                showStatus("Please connect wallet");
-                return;
-            }
-            const amountIn = card.querySelector(".amount-input").value;
-            if (!amountIn || amountIn <= 0) {
-                showStatus("Please enter a valid amount");
-                return;
-            }
-            let amountInWei;
-            try {
-                amountInWei = web3.utils.toBN(web3.utils.toWei(amountIn, "ether"));
-            } catch (e) {
-                showStatus("Invalid amount entered");
-                return;
-            }
-            const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress);
-            const tokenBalance = await tokenContract.methods.balanceOf(account).call();
-            if (web3.utils.toBN(tokenBalance).lt(amountInWei)) {
-                showStatus("Insufficient FEED balance");
-                return;
-            }
-            const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
-            try {
-                button.classList.add("loading");
-                button.disabled = true;
-                showStatus("Checking trading pair...");
-                let bestOutput = web3.utils.toBN(0);
-                let routes;
-                for (const stable of [true, false]) {
-                    const pairAddress = await factory.methods.getPair(tokenAddress, wboneAddress, stable).call();
-                    if (pairAddress !== "0x0000000000000000000000000000000000000000") {
-                        const tempRoutes = [{ from: tokenAddress, to: wboneAddress, stable }];
-                        const amounts = await router.methods.getAmountsOut(amountInWei, tempRoutes).call();
-                        const output = web3.utils.toBN(amounts[amounts.length - 1]);
-                        if (output.gt(bestOutput)) {
-                            bestOutput = output;
-                            routes = tempRoutes;
-                        }
-                    }
-                }
-                if (!routes || bestOutput.eq(web3.utils.toBN("0"))) {
-                    showStatus("No valid trading pair found");
-                    return;
-                }
-                const pairAddress = await factory.methods.getPair(tokenAddress, wboneAddress, routes[0].stable).call();
-                const pairContract = new web3.eth.Contract(pairAbi, pairAddress);
-                const reserves = await pairContract.methods.getReserves().call();
-                const token0 = await pairContract.methods.token0().call();
-                const reserveFrom = token0 === tokenAddress ? reserves.reserve0 : reserves.reserve1;
-                const reserveTo = token0 === tokenAddress ? reserves.reserve1 : reserves.reserve0;
-                const reserveFromBN = web3.utils.toBN(reserveFrom);
-                const reserveToBN = web3.utils.toBN(reserveTo);
-                const priceImpact = amountInWei.mul(web3.utils.toBN(100)).div(reserveFromBN.add(amountInWei));
-                if (priceImpact.gt(web3.utils.toBN(maxPriceImpact))) {
-                    showStatus(`Price impact too high (${priceImpact.toString()}%)`);
-                    return;
-                }
-                if (bestOutput.gt(reserveToBN)) {
-                    showStatus("Insufficient liquidity");
-                    return;
-                }
-                const slippageFactor = web3.utils.toBN(1000 - defaultSlippage * 1000);
-                const amountOutMin = bestOutput.mul(slippageFactor).div(web3.utils.toBN(1000));
-                showStatus("Approving token...");
-                await tokenContract.methods.approve(routerAddress, maxAllowance).send({ from: account });
-                showStatus("Processing sell...");
-                await router.methods.swapExactTokensForETHSupportingFeeOnTransferTokens(
-                    amountInWei.toString(),
-                    amountOutMin.toString(),
-                    routes,
-                    account,
-                    deadline
-                ).send({ from: account });
-                showStatus("Sell successful!");
-                await updateBalances();
-                card.querySelector(".amount-input").value = "";
-                card.querySelector(".swap-info").innerText = "Enter a valid amount";
-                updateTradeButtonState(card);
-            } catch (error) {
-                let errorMessage = error.message || "Transaction failed";
-                if (error.code === 4001) errorMessage = "User rejected transaction";
-                else if (error.message.includes("INSUFFICIENT_OUTPUT_AMOUNT")) errorMessage = "Slippage too high";
-                else if (error.message.includes("INSUFFICIENT_LIQUIDITY")) errorMessage = "Insufficient liquidity";
-                showStatus(errorMessage);
-            } finally {
-                button.classList.remove("loading");
-                button.disabled = false;
+                tradeButton.classList.remove("loading");
+                tradeButton.disabled = false;
             }
         }
 
