@@ -423,8 +423,10 @@
         };
         const routerAddress = "0x96b16aBD53Bfd765F4CD118590C1d0be8B57DE24";
         const factoryAddress = "0xB9fbdFA27B7ba8BB2d4bB4aB399e4c55F0F7F83a";
-        const wboneAddress = "0x839FdB6cc98342B428E074C1573ADF6D48CA3bFd";
+        const wethAddress = "0x839FdB6cc98342B428E074C1573ADF6D48CA3bFd"; // 确保与 Woofswap 的 wethAddress 一致
         const routerAbi = [
+            {"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"internalType":"address","name":"tokenFrom","type":"address"},{"internalType":"address","name":"tokenTo","type":"address"},{"internalType":"bool","name":"stable","type":"bool"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactTokensForTokensSimple","outputs":[{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct Router.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactTokensForTokensSupportingFeeOnTransferTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},
             {"inputs":[{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct Router.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactETHForTokensSupportingFeeOnTransferTokens","outputs":[],"stateMutability":"payable","type":"function"},
             {"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct Router.route[]","name":"routes","type":"tuple[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactTokensForETHSupportingFeeOnTransferTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},
             {"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"components":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bool","name":"stable","type":"bool"}],"internalType":"struct Router.route[]","name":"routes","type":"tuple[]"}],"name":"getAmountsOut","outputs":[{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"stateMutability":"view","type":"function"}
@@ -435,7 +437,8 @@
         const pairAbi = [
             {"inputs":[],"name":"getReserves","outputs":[{"internalType":"uint256","name":"reserve0","type":"uint256"},{"internalType":"uint256","name":"reserve1","type":"uint256"},{"internalType":"uint32","name":"blockTimestampLast","type":"uint32"}],"stateMutability":"view","type":"function"},
             {"inputs":[],"name":"token0","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
-            {"inputs":[],"name":"token1","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
+            {"inputs":[],"name":"token1","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"stable","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}
         ];
         const erc20Abi = [
             {"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"},
@@ -451,7 +454,7 @@
         };
         let web3, account, router, factory;
         let fromToken = boneToken;
-        let toToken = feedToken;
+        let toToken = feedToken; // 默认选择 FEED 作为目标代币
         let fromBalance = "0";
         let isFromBone = true;
         let isApproving = false;
@@ -475,6 +478,7 @@
             approving: ["Woof! Approving your tokens, hold on, pup!", "Arf! Sniffing out approval, almost there, hooman!", "Bow wow! Authorizing the swap, stay pawsitive!", "Ruff! Getting ready to trade, approving now!"],
             userDenied: ["Woof woof! You scared me off, hooman! Approve next time, pup!", "Arf! No swap today? You’re a tricky one, let’s try again!", "Bow wow! Rejected my trade? Give me a bone next time!", "Ruff ruff! You denied me, hooman! Let’s wag back later!"]
         };
+
         function getRandomMessage(type, param1, param2) {
             const messages = dogMessages[type];
             if (typeof messages === 'function') {
@@ -483,9 +487,11 @@
             }
             return messages[Math.floor(Math.random() * messages.length)];
         }
+
         function shortenAddress(address) {
             return address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "";
         }
+
         async function connectWallet() {
             try {
                 const connectButton = document.getElementById("connectWalletButton");
@@ -511,6 +517,7 @@
                     networkStatus.innerText = "Connected to Shibarium";
                     dogMessage.innerText = getRandomMessage("connectSuccess");
                     await updateBalances();
+                    await loadToken();
                 } else {
                     throw new Error("Please install MetaMask!");
                 }
@@ -527,6 +534,7 @@
                 document.getElementById("connectWalletButton").disabled = false;
             }
         }
+
         async function switchToShibarium() {
             try {
                 await window.ethereum.request({
@@ -544,6 +552,7 @@
                 }
             }
         }
+
         function setupWalletListeners() {
             if (typeof window.ethereum === "undefined") return;
             window.ethereum.on("accountsChanged", (accounts) => {
@@ -573,6 +582,7 @@
                 }
             });
         }
+
         async function updateBalances() {
             if (!web3 || !account) return;
             const card = document.getElementById("tokenCard");
@@ -593,6 +603,7 @@
                 : await web3.eth.getBalance(account);
             card.dataset.toBalance = toBalance;
         }
+
         async function calculateOutput() {
             const card = document.getElementById("tokenCard");
             const amountIn = card.querySelector(".amount-input").value;
@@ -614,17 +625,18 @@
             dogMessage.innerText = getRandomMessage("calcStart");
             try {
                 let bestOutput = web3.utils.toBN("0");
+                let bestStable = false;
                 let routes;
-                const from = isFromBone ? wboneAddress : toToken.address;
-                const to = isFromBone ? toToken.address : wboneAddress;
+                const [tokenA, tokenB] = [fromToken.address, toToken.address].sort(); // 按地址排序以匹配池子
                 for (const stable of [true, false]) {
-                    const pairAddress = await factory.methods.getPair(from, to, stable).call();
+                    const pairAddress = await factory.methods.getPair(tokenA, tokenB, stable).call();
                     if (pairAddress !== "0x0000000000000000000000000000000000000000") {
-                        const tempRoutes = [{ from, to, stable }];
+                        const tempRoutes = [{ from: fromToken.address, to: toToken.address, stable }];
                         const amounts = await router.methods.getAmountsOut(amountInWei, tempRoutes).call();
                         const output = web3.utils.toBN(amounts[amounts.length - 1]);
                         if (output.gt(bestOutput)) {
                             bestOutput = output;
+                            bestStable = stable;
                             routes = tempRoutes;
                         }
                     }
@@ -639,11 +651,14 @@
                 dogMessage.innerText = getRandomMessage("calcSuccess", outputEther, isFromBone ? "FEED" : "BONE");
                 card.dataset.routes = JSON.stringify(routes);
                 card.dataset.bestOutput = bestOutput.toString();
+                card.dataset.bestStable = bestStable;
             } catch (error) {
                 swapInfo.innerText = "Error calculating output";
                 dogMessage.innerText = getRandomMessage("calcFail");
+                console.error("Calculate output error:", error);
             }
         }
+
         async function loadToken() {
             const card = document.getElementById("tokenCard");
             const dogMessage = document.getElementById("dogMessage");
@@ -718,6 +733,7 @@
             setupCardListeners(card);
             dogMessage.innerText = "Woof! FEED loaded, ready to swap, pup!";
         }
+
         function setupCardListeners(card) {
             card.querySelectorAll(".copy-button").forEach(button => {
                 button.addEventListener("click", () => {
@@ -754,6 +770,7 @@
                     card.querySelector(".swap-info").innerText = "Enter a valid amount";
                     dogMessage.innerText = getRandomMessage("switchTokens");
                     await updateBalances();
+                    calculateOutput();
                     updateTradeButton();
                 });
             });
@@ -772,6 +789,7 @@
                 });
             });
         }
+
         async function setPercentage(percentage) {
             const card = document.getElementById("tokenCard");
             const dogMessage = document.getElementById("dogMessage");
@@ -794,6 +812,7 @@
             updateTradeButton();
             calculateOutput();
         }
+
         function updateTradeButton() {
             const card = document.getElementById("tokenCard");
             const tradeButton = card.querySelector(".trade-button");
@@ -801,23 +820,25 @@
             const amount = parseFloat(amountInput.value);
             tradeButton.disabled = !account || !amount || amount <= 0;
         }
+
         async function approveToken(tokenAddress, amountInWei) {
-            if (isFromBone) return;
+            if (tokenAddress === wethAddress && fromToken.isNative) return;
             const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress);
             const allowance = await tokenContract.methods.allowance(account, routerAddress).call();
             const card = document.getElementById("tokenCard");
             const tradeButton = card.querySelector(".trade-button");
             const dogMessage = document.getElementById("dogMessage");
-            if (web3.utils.toBN(allowance) < web3.utils.toBN(amountInWei)) {
+            if (web3.utils.toBN(allowance).lt(web3.utils.toBN(amountInWei))) {
                 tradeButton.innerText = "Approving...";
                 tradeButton.disabled = true;
                 dogMessage.innerText = getRandomMessage("approving");
-                await tokenContract.methods.approve(routerAddress, "0xfffffffffffffffffffffffffffffffff").send({ from: account });
-                tradeButton.innerText = "Sell";
+                await tokenContract.methods.approve(routerAddress, amountInWei).send({ from: account });
+                tradeButton.innerText = isFromBone ? "Buy" : "Sell";
                 tradeButton.disabled = false;
                 dogMessage.innerText = "Woof! Tokens approved!";
             }
         }
+
         async function swapTokens() {
             const card = document.getElementById("tokenCard");
             const amountIn = card.querySelector(".amount-input").value;
@@ -854,16 +875,38 @@
             networkStatus.innerText = "Processing swap...";
             dogMessage.innerText = getRandomMessage("swapStart");
             try {
-                const routes = [{ from: isFromBone ? wboneAddress : feedToken.address, to: isFromBone ? feedToken.address : wboneAddress, stable: false }];
-                const amounts = await router.methods.getAmountsOut(amountInWei, routes).call();
-                const amountOut = web3.utils.toBN(amounts[amounts.length - 1]);
-                const slippageFactor = web3.utils.toBN(1000 - defaultSlippage * 1000);
-                const amountOutMin = amountOut.mul(slippageFactor).div(web3.utils.toBN(1000));
-
-                if (!isFromBone) {
-                    await approveToken(feedToken.address, amountInWei);
+                const routes = [{ from: fromToken.address, to: toToken.address, stable: card.dataset.bestStable }];
+                const amounts = await router.methods.getAmountsOut(web3.utils.toBN(amountInWei), routes).call();
+                const bestOutput = web3.utils.toBN(amounts[amounts.length - 1]);
+                if (bestOutput.eq(web3.utils.toBN("0"))) {
+                    networkStatus.innerText = "No valid trading pair found.";
+                    dogMessage.innerText = getRandomMessage("calcFail");
+                    return;
                 }
-
+                const pairAddress = await factory.methods.getPair(fromToken.address, toToken.address, card.dataset.bestStable).call();
+                const pairContract = new web3.eth.Contract(pairAbi, pairAddress);
+                const reserves = await pairContract.methods.getReserves().call();
+                const token0 = await pairContract.methods.token0().call();
+                const reserveFrom = token0 === fromToken.address ? reserves.reserve0 : reserves.reserve1;
+                const reserveTo = token0 === fromToken.address ? reserves.reserve1 : reserves.reserve0;
+                const reserveFromBN = web3.utils.toBN(reserveFrom);
+                const reserveToBN = web3.utils.toBN(reserveTo);
+                const priceImpact = web3.utils.toBN(amountInWei).mul(web3.utils.toBN(100)).div(reserveFromBN.add(web3.utils.toBN(amountInWei)));
+                if (priceImpact.gt(web3.utils.toBN(maxPriceImpact * 100))) {
+                    networkStatus.innerText = `Price impact too high (${priceImpact.toString()}%)`;
+                    dogMessage.innerText = getRandomMessage("highPriceImpact");
+                    return;
+                }
+                if (bestOutput.gt(reserveToBN)) {
+                    networkStatus.innerText = "Insufficient liquidity";
+                    dogMessage.innerText = getRandomMessage("insufficientLiquidity");
+                    return;
+                }
+                const slippageFactor = web3.utils.toBN(1000 - defaultSlippage * 1000);
+                const amountOutMin = bestOutput.mul(slippageFactor).div(web3.utils.toBN(1000));
+                if (!fromToken.isNative) {
+                    await approveToken(fromToken.address, amountInWei);
+                }
                 if (isFromBone) {
                     await router.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(
                         amountOutMin.toString(),
@@ -880,7 +923,6 @@
                         deadline
                     ).send({ from: account });
                 }
-
                 networkStatus.innerText = "Swap successful!";
                 dogMessage.innerText = getRandomMessage("swapSuccess");
                 card.querySelector(".amount-input").value = "";
@@ -888,10 +930,17 @@
                 await updateBalances();
                 updateTradeButton();
             } catch (error) {
+                console.error("Swap failed:", error);
                 let errorMessage = error.message || "Transaction failed";
                 if (error.code === 4001) {
                     errorMessage = "User rejected transaction";
                     dogMessage.innerText = getRandomMessage("userDenied");
+                } else if (error.message.includes("INSUFFICIENT_OUTPUT_AMOUNT") || error.message.includes("EXCESSIVE_INPUT_AMOUNT")) {
+                    errorMessage = "Swap failed: Price impact or slippage too high";
+                    dogMessage.innerText = "Woof! Swap failed—too much price impact";
+                } else if (error.message.includes("INSUFFICIENT_LIQUIDITY")) {
+                    errorMessage = "Swap failed: Insufficient liquidity";
+                    dogMessage.innerText = getRandomMessage("insufficientLiquidity");
                 } else {
                     dogMessage.innerText = getRandomMessage("swapFail");
                 }
@@ -901,6 +950,7 @@
                 tradeButton.disabled = false;
             }
         }
+
         document.getElementById("connectWalletButton").addEventListener("click", connectWallet);
         window.addEventListener("load", async () => {
             if (!window.location.protocol.includes("http")) {
